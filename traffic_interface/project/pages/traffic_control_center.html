@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Traffic Control Center - Real-time traffic monitoring and congestion management dashboard"
+    />
+    <title>Traffic Control Center | Traffic AI Dashboard</title>
+    <link rel="stylesheet" href="../css/main.css" />
+
+    <script
+      type="module"
+      async
+      src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Ftrafficai2122back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.12"
+    ></script>
+    <script
+      type="module"
+      defer
+      src="https://static.rocket.new/rocket-shot.js?v=0.0.2"
+    ></script>
+  </head>
+  <body class="bg-background min-h-screen">
+    <!-- Header Navigation -->
+    <header
+      class="bg-surface border-b border-border sticky top-0 z-navigation shadow-sm"
+    >
+      <nav class="max-w-[1920px] mx-auto px-6 py-4">
+        <div class="flex items-center justify-between">
+          <!-- Logo -->
+          <div class="flex items-center gap-3">
+            <svg
+              width="40"
+              height="40"
+              viewBox="0 0 40 40"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              aria-label="Traffic AI Dashboard Logo"
+            >
+              <rect width="40" height="40" rx="8" fill="#1E40AF" />
+              <path
+                d="M20 8L28 14V26L20 32L12 26V14L20 8Z"
+                stroke="#FFFFFF"
+                stroke-width="2"
+                stroke-linejoin="round"
+              />
+              <circle cx="20" cy="20" r="4" fill="#F59E0B" />
+              <path
+                d="M20 12V16M20 24V28M12 20H16M24 20H28"
+                stroke="#FFFFFF"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
+            </svg>
+            <div>
+              <h1 class="text-xl font-heading font-semibold text-text-primary">
+                Traffic AI
+              </h1>
+              <p class="text-xs text-text-secondary">
+                Urban Intelligence Platform
+              </p>
+            </div>
+          </div>
+
+          <!-- Navigation Links -->
+          <div class="hidden md:flex items-center gap-2">
+            <a
+              href="traffic_control_center.html"
+              class="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium transition-smooth"
+            >
+              Control Center
+            </a>
+            <a
+              href="route_optimization_hub.html"
+              class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth"
+            >
+              Route Optimization
+            </a>
+            <a
+              href="analytics_dashboard.html"
+              class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth"
+            >
+              Analytics
+            </a>
+          </div>
+
+          <!-- Mobile Menu Button -->
+          <button
+            id="mobileMenuBtn"
+            class="md:hidden p-2 rounded-lg hover:bg-secondary-100 transition-smooth"
+            aria-label="Toggle mobile menu"
+          >
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div
+          id="mobileMenu"
+          class="hidden md:hidden mt-4 pb-2 border-t border-border pt-4"
+        >
+          <div class="flex flex-col gap-2">
+            <a
+              href="traffic_control_center.html"
+              class="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium"
+            >
+              Control Center
+            </a>
+            <a
+              href="route_optimization_hub.html"
+              class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth"
+            >
+              Route Optimization
+            </a>
+            <a
+              href="analytics_dashboard.html"
+              class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth"
+            >
+              Analytics
+            </a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-[1920px] mx-auto px-4 md:px-6 py-6">
+      <!-- Page Header -->
+      <div class="mb-6">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <h2
+              class="text-3xl font-heading font-semibold text-text-primary mb-2"
+            >
+              Traffic Control Center
+            </h2>
+            <p class="text-text-secondary">
+              Real-time network monitoring and congestion management
+            </p>
+          </div>
+          <div class="flex items-center gap-3">
+            <div
+              class="flex items-center gap-2 px-4 py-2 bg-success-50 border border-success-600 rounded-lg"
+            >
+              <div
+                class="w-2 h-2 bg-success-600 rounded-full animate-pulse"
+              ></div>
+              <span class="text-sm font-medium text-success-700"
+                >Live Data</span
+              >
+            </div>
+            <button id="helpBtn" class="btn btn-outline" aria-label="Help">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-16 gap-6">
+        <!-- Map Panel (Left - 10 cols) -->
+        <div class="lg:col-span-10">
+          <div class="card p-0 overflow-hidden">
+            <!-- Map Header -->
+            <div class="px-6 py-4 border-b border-border bg-secondary-50">
+              <div class="flex items-center justify-between">
+                <h3
+                  class="text-lg font-heading font-semibold text-text-primary"
+                >
+                  Network Map
+                </h3>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm text-text-secondary">Last Updated:</span>
+                  <span
+                    id="lastUpdateTime"
+                    class="text-sm font-medium text-text-primary tabular-nums"
+                    >12:04:24</span
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Map Container -->
+            <div class="relative bg-secondary-50" style="height: 600px">
+              <!-- Loading Overlay -->
+              <div
+                id="mapLoading"
+                class="absolute inset-0 bg-surface/80 backdrop-blur-sm flex items-center justify-center z-map-overlay hidden"
+              >
+                <div class="text-center">
+                  <div
+                    class="w-12 h-12 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-3"
+                  ></div>
+                  <p class="text-sm text-text-secondary">
+                    Loading network data...
+                  </p>
+                </div>
+              </div>
+
+              <!-- SVG Map -->
+              <svg
+                id="trafficMap"
+                width="100%"
+                height="100%"
+                viewBox="0 0 800 600"
+                class="cursor-crosshair"
+              >
+                <!-- Grid Background -->
+                <defs>
+                  <pattern
+                    id="grid"
+                    width="40"
+                    height="40"
+                    patternUnits="userSpaceOnUse"
+                  >
+                    <path
+                      d="M 40 0 L 0 0 0 40"
+                      fill="none"
+                      stroke="#E2E8F0"
+                      stroke-width="0.5"
+                    />
+                  </pattern>
+                  <filter id="glow">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                    <feMerge>
+                      <feMergeNode in="coloredBlur" />
+                      <feMergeNode in="SourceGraphic" />
+                    </feMerge>
+                  </filter>
+                </defs>
+                <rect width="800" height="600" fill="url(#grid)" />
+
+                <!-- Map will be dynamically populated -->
+                <g id="mapNodes"></g>
+                <g id="mapEdges"></g>
+              </svg>
+
+              <!-- Map Legend -->
+              <div
+                class="absolute bottom-4 left-4 bg-surface/95 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-border"
+              >
+                <h4 class="text-sm font-semibold text-text-primary mb-3">
+                  Congestion Level
+                </h4>
+                <div class="space-y-2">
+                  <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 rounded-full bg-success-500"></div>
+                    <span class="text-xs text-text-secondary">Low (0-30)</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 rounded-full bg-warning-500"></div>
+                    <span class="text-xs text-text-secondary"
+                      >Medium (31-60)</span
+                    >
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <div class="w-4 h-4 rounded-full bg-error-500"></div>
+                    <span class="text-xs text-text-secondary"
+                      >High (61-100)</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <!-- Zoom Controls -->
+              <div class="absolute top-4 right-4 flex flex-col gap-2">
+                <button
+                  id="zoomIn"
+                  class="w-10 h-10 bg-surface rounded-lg shadow-md border border-border hover:bg-secondary-50 transition-smooth flex items-center justify-center"
+                  aria-label="Zoom in"
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </button>
+                <button
+                  id="zoomOut"
+                  class="w-10 h-10 bg-surface rounded-lg shadow-md border border-border hover:bg-secondary-50 transition-smooth flex items-center justify-center"
+                  aria-label="Zoom out"
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </button>
+                <button
+                  id="resetZoom"
+                  class="w-10 h-10 bg-surface rounded-lg shadow-md border border-border hover:bg-secondary-50 transition-smooth flex items-center justify-center"
+                  aria-label="Reset zoom"
+                >
+                  <svg
+                    width="20"
+                    height="20"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path
+                      d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"
+                    ></path>
+                    <path d="M21 3v5h-5"></path>
+                    <path
+                      d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"
+                    ></path>
+                    <path d="M3 21v-5h5"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Selected Node Info -->
+            <div
+              id="nodeInfo"
+              class="px-6 py-4 border-t border-border bg-secondary-50 hidden"
+            >
+              <div class="flex items-center justify-between">
+                <div>
+                  <h4 class="text-sm font-semibold text-text-primary mb-1">
+                    Selected Node
+                  </h4>
+                  <div class="flex items-center gap-4 text-sm">
+                    <span class="text-text-secondary"
+                      >ID:
+                      <span id="nodeId" class="font-mono text-text-primary"
+                        >-</span
+                      ></span
+                    >
+                    <span class="text-text-secondary"
+                      >Congestion:
+                      <span
+                        id="nodeCongestion"
+                        class="font-mono text-text-primary"
+                        >-</span
+                      ></span
+                    >
+                    <span class="text-text-secondary"
+                      >Suggested Timing:
+                      <span id="nodeTiming" class="font-mono text-text-primary"
+                        >-</span
+                      >s</span
+                    >
+                  </div>
+                </div>
+                <button
+                  id="clearSelection"
+                  class="text-sm text-primary hover:text-primary-700 font-medium"
+                >
+                  Clear Selection
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Control Panel (Right - 6 cols) -->
+        <div class="lg:col-span-6 space-y-6">
+          <!-- Simulation Controls -->
+          <div class="card">
+            <h3
+              class="text-lg font-heading font-semibold text-text-primary mb-4"
+            >
+              Simulation Controls
+            </h3>
+
+            <!-- Mode Selector -->
+            <div class="mb-6">
+              <label class="block text-sm font-medium text-text-primary mb-2"
+                >Simulation Mode</label
+              >
+              <div class="grid grid-cols-3 gap-2">
+                <button
+                  class="simulation-mode-btn active px-4 py-3 rounded-lg border-2 border-primary bg-primary-50 text-primary font-medium text-sm transition-smooth"
+                  data-mode="real"
+                >
+                  Real-time
+                </button>
+                <button
+                  class="simulation-mode-btn px-4 py-3 rounded-lg border-2 border-border bg-surface text-text-primary font-medium text-sm hover:border-border-hover transition-smooth"
+                  data-mode="peak"
+                >
+                  Peak Hour
+                </button>
+                <button
+                  class="simulation-mode-btn px-4 py-3 rounded-lg border-2 border-border bg-surface text-text-primary font-medium text-sm hover:border-border-hover transition-smooth"
+                  data-mode="incident"
+                >
+                  Incident
+                </button>
+              </div>
+            </div>
+
+            <!-- Traffic Severity Multiplier -->
+            <div class="mb-6">
+              <div class="flex items-center justify-between mb-2">
+                <label class="text-sm font-medium text-text-primary"
+                  >Traffic Severity</label
+                >
+                <span
+                  id="severityValue"
+                  class="text-sm font-mono font-semibold text-primary"
+                  >1.0x</span
+                >
+              </div>
+              <label
+                for="severitySlider"
+                class="block text-sm font-medium mb-2"
+              >
+                Severity Level
+              </label>
+
+              <input
+                type="range"
+                id="severitySlider"
+                min="0"
+                max="2"
+                step="0.1"
+                value="1"
+                class="w-full h-2 bg-secondary-200 rounded-lg appearance-none cursor-pointer accent-primary"
+              />
+
+              <div
+                class="flex justify-between text-xs text-text-secondary mt-1"
+              >
+                <span>0.5x</span>
+                <span>2.0x</span>
+              </div>
+            </div>
+
+            <!-- Auto-Refresh Controls -->
+            <div>
+              <label
+                for="refreshInterval"
+                class="block text-sm font-medium text-text-primary mb-2"
+              >
+                Auto-Refresh Interval
+              </label>
+
+              <select id="refreshInterval" class="input w-full">
+                <option value="30">30 seconds</option>
+                <option value="60" selected>1 minute</option>
+                <option value="120">2 minutes</option>
+                <option value="300">5 minutes</option>
+              </select>
+            </div>
+
+            <!-- Manual Refresh Button -->
+            <button id="manualRefresh" class="btn btn-primary w-full mt-4">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="mr-2"
+              >
+                <path
+                  d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"
+                />
+              </svg>
+              Refresh Now
+            </button>
+          </div>
+
+          <!-- Network Status -->
+          <div class="card">
+            <h3
+              class="text-lg font-heading font-semibold text-text-primary mb-4"
+            >
+              Network Status
+            </h3>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-text-secondary">API Connection</span>
+                <div class="flex items-center gap-2">
+                  <div class="w-2 h-2 bg-success-500 rounded-full"></div>
+                  <span class="text-sm font-medium text-success-700"
+                    >Connected</span
+                  >
+                </div>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-text-secondary">Data Quality</span>
+                <span class="text-sm font-medium text-text-primary">98.5%</span>
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-text-secondary">Response Time</span>
+                <span class="text-sm font-mono font-medium text-text-primary"
+                  >142ms</span
+                >
+              </div>
+              <div class="flex items-center justify-between">
+                <span class="text-sm text-text-secondary">Active Nodes</span>
+                <span
+                  class="text-sm font-mono font-medium text-text-primary"
+                  id="activeNodes"
+                  >50</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- Top Hotspots -->
+          <div class="card">
+            <h3
+              class="text-lg font-heading font-semibold text-text-primary mb-4"
+            >
+              Top Congestion Hotspots
+            </h3>
+            <div id="hotspotsList" class="space-y-3">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Export Controls -->
+          <div class="card">
+            <h3
+              class="text-lg font-heading font-semibold text-text-primary mb-4"
+            >
+              Export Data
+            </h3>
+            <div class="space-y-2">
+              <button
+                id="exportCSV"
+                class="btn btn-outline w-full justify-start"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="mr-2"
+                >
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="7 10 12 15 17 10"></polyline>
+                  <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Export Congestion CSV
+              </button>
+              <button
+                id="exportScreenshot"
+                class="btn btn-outline w-full justify-start"
+              >
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="mr-2"
+                >
+                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                  <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                  <polyline points="21 15 16 10 5 21"></polyline>
+                </svg>
+                Export Map Screenshot
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistics Strip -->
+      <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="card">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-text-secondary mb-1">Average Congestion</p>
+              <p
+                class="text-2xl font-heading font-semibold text-text-primary tabular-nums"
+                id="avgCongestion"
+              >
+                42.3
+              </p>
+            </div>
+            <div
+              class="w-12 h-12 rounded-lg bg-warning-100 flex items-center justify-center"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#D97706"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"
+                ></path>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-text-secondary mb-1">Active Incidents</p>
+              <p
+                class="text-2xl font-heading font-semibold text-text-primary tabular-nums"
+                id="activeIncidents"
+              >
+                3
+              </p>
+            </div>
+            <div
+              class="w-12 h-12 rounded-lg bg-error-100 flex items-center justify-center"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#DC2626"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"
+                ></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-text-secondary mb-1">Route Efficiency</p>
+              <p
+                class="text-2xl font-heading font-semibold text-text-primary tabular-nums"
+                id="routeEfficiency"
+              >
+                87.5%
+              </p>
+            </div>
+            <div
+              class="w-12 h-12 rounded-lg bg-success-100 flex items-center justify-center"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#059669"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="flex items-center justify-between">
+            <div>
+              <p class="text-sm text-text-secondary mb-1">Network Load</p>
+              <p
+                class="text-2xl font-heading font-semibold text-text-primary tabular-nums"
+                id="networkLoad"
+              >
+                68%
+              </p>
+            </div>
+            <div
+              class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#1E40AF"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal-backdrop hidden">
+      <div class="modal">
+        <div class="p-6 border-b border-border">
+          <div class="flex items-center justify-between">
+            <h3 class="text-xl font-heading font-semibold text-text-primary">
+              Traffic Control Center Guide
+            </h3>
+            <button
+              id="closeHelp"
+              class="p-2 rounded-lg hover:bg-secondary-100 transition-smooth"
+              aria-label="Close help modal"
+            >
+              <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
+            </button>
+          </div>
+        </div>
+        <div class="p-6 max-h-[60vh] overflow-y-auto">
+          <div class="space-y-6">
+            <div>
+              <h4 class="text-lg font-semibold text-text-primary mb-2">
+                Map Interactions
+              </h4>
+              <ul class="space-y-2 text-sm text-text-secondary">
+                <li class="flex items-start gap-2">
+                  <span class="text-primary mt-1">•</span>
+                  <span
+                    ><strong>Click</strong> on any node to view detailed
+                    congestion information</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary mt-1">•</span>
+                  <span
+                    ><strong>Right-click</strong> to set as route
+                    destination</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary mt-1">•</span>
+                  <span
+                    ><strong>Hover</strong> over nodes to see quick stats in
+                    tooltip</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-primary mt-1">•</span>
+                  <span
+                    >Use <strong>zoom controls</strong> to navigate the
+                    network</span
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold text-text-primary mb-2">
+                Simulation Modes
+              </h4>
+              <ul class="space-y-2 text-sm text-text-secondary">
+                <li class="flex items-start gap-2">
+                  <span class="text-success-600 mt-1">•</span>
+                  <span
+                    ><strong>Real-time:</strong> Current network
+                    conditions</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-warning-600 mt-1">•</span>
+                  <span
+                    ><strong>Peak Hour:</strong> Simulates rush hour traffic
+                    patterns</span
+                  >
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="text-error-600 mt-1">•</span>
+                  <span
+                    ><strong>Incident:</strong> Models major traffic
+                    disruptions</span
+                  >
+                </li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-lg font-semibold text-text-primary mb-2">
+                Color Coding
+              </h4>
+              <ul class="space-y-2 text-sm text-text-secondary">
+                <li class="flex items-center gap-2">
+                  <div class="w-4 h-4 rounded-full bg-success-500"></div>
+                  <span><strong>Green:</strong> Low congestion (0-30)</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <div class="w-4 h-4 rounded-full bg-warning-500"></div>
+                  <span
+                    ><strong>Yellow:</strong> Medium congestion (31-60)</span
+                  >
+                </li>
+                <li class="flex items-center gap-2">
+                  <div class="w-4 h-4 rounded-full bg-error-500"></div>
+                  <span><strong>Red:</strong> High congestion (61-100)</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="p-6 border-t border-border">
+          <button id="closeHelpBtn" class="btn btn-primary w-full">
+            Got it!
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div
+      id="nodeTooltip"
+      class="fixed bg-surface/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-border z-tooltip hidden pointer-events-none"
+    >
+      <div class="text-xs space-y-1">
+        <div class="font-semibold text-text-primary" id="tooltipNodeId"></div>
+        <div class="text-text-secondary">
+          Congestion:
+          <span
+            class="font-mono text-text-primary"
+            id="tooltipCongestion"
+          ></span>
+        </div>
+      </div>
+    </div>
+
+   <script>
+/* ---------- State ---------- */
+let trafficNodes = [];
+let selectedNode = null;
+let currentMode = "real";
+let severityMultiplier = 1.0;
+let refreshInterval = null;
+let zoomLevel = 1;
+
+/* ---------- DOM refs ---------- */
+const mobileMenuBtn = document.getElementById("mobileMenuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+const helpBtn = document.getElementById("helpBtn");
+const helpModal = document.getElementById("helpModal");
+const closeHelp = document.getElementById("closeHelp");
+const closeHelpBtn = document.getElementById("closeHelpBtn");
+const severitySlider = document.getElementById("severitySlider");
+const severityValue = document.getElementById("severityValue");
+
+/* ---------- Small UX wiring ---------- */
+mobileMenuBtn.addEventListener("click", () => mobileMenu.classList.toggle("hidden"));
+helpBtn.addEventListener("click", () => helpModal.classList.remove("hidden"));
+[closeHelp, closeHelpBtn].forEach(btn => { if (btn) btn.addEventListener("click", () => helpModal.classList.add("hidden")); });
+helpModal.addEventListener("click", (e) => { if (e.target === helpModal) helpModal.classList.add("hidden"); });
+
+severitySlider.addEventListener("input", (e) => {
+  const value = parseFloat(e.target.value).toFixed(1);
+  severityValue.textContent = `${value}x`;
+  updateTrafficSeverity(parseFloat(value));
+});
+
+/* ---------- Helpers: normalization, clamp, force layout ---------- */
+function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+function normalizeCongestionsArray(arr) {
+  // arr: numeric array => returns {min,max,func}
+  const nums = arr.map(x => Number(x) || 0);
+  const minC = Math.min(...nums);
+  const maxC = Math.max(...nums);
+  return {
+    minC,
+    maxC,
+    fn: (raw) => {
+      raw = Number(raw) || 0;
+      if (minC === maxC) {
+        // All equal: return the raw value but add a small jitter so UI shows different colors
+        const jitter = (Math.random() - 0.5) * 12; // ±6
+        return Math.min(100, Math.max(0, Math.round(raw + jitter)));
+      }
+      const scaled = ((raw - minC) / (maxC - minC)) * 100;
+      return Math.min(100, Math.max(0, Math.round(scaled)));
+    }
+  };
+}
+
+function applyForceLayout(iterations = 250) {
+  if (!Array.isArray(trafficNodes) || trafficNodes.length < 2) return;
+  const width = 800;
+  const height = 600;
+  const margin = 24;
+  const strength = 0.02;
+  const repel = 900;
+
+  for (let k = 0; k < iterations; k++) {
+    // repulsion between every pair
+    for (let i = 0; i < trafficNodes.length; i++) {
+      for (let j = i + 1; j < trafficNodes.length; j++) {
+        const a = trafficNodes[i];
+        const b = trafficNodes[j];
+        let dx = a.x - b.x;
+        let dy = a.y - b.y;
+        let dist = Math.sqrt(dx * dx + dy * dy) + 0.1;
+        const force = repel / (dist * dist);
+        const fx = (dx / dist) * force;
+        const fy = (dy / dist) * force;
+        a.x += fx * strength;
+        a.y += fy * strength;
+        b.x -= fx * strength;
+        b.y -= fy * strength;
+      }
+    }
+
+    // optional: small center force so nodes don't drift out
+    const cx = width / 2;
+    const cy = height / 2;
+    for (let n of trafficNodes) {
+      n.x += (cx - n.x) * 0.001;
+      n.y += (cy - n.y) * 0.001;
+      // clamp softly each iteration
+      n.x = clamp(n.x, margin, width - margin);
+      n.y = clamp(n.y, margin, height - margin);
+    }
+  }
+
+  // final clamp to bounds
+  for (let n of trafficNodes) {
+    n.x = clamp(n.x, margin, width - margin);
+    n.y = clamp(n.y, margin, height - margin);
+  }
+}
+
+/* ---------- Color/size helpers ---------- */
+const getNodeColor = (congestion) => {
+  // congestion expected 0..100
+  if (congestion < 30) return "#10B981"; // green
+  if (congestion < 60) return "#F59E0B"; // orange
+  return "#EF4444"; // red
+};
+const getNodeSize = (congestion) => 6 + (congestion / 100) * 8; // 6..14
+
+/* ---------- Fetch and build trafficNodes ---------- */
+async function fetchRealTrafficData() {
+  try {
+    const res = await fetch("http://127.0.0.1:5000/api/graph");
+    const data = await res.json();
+    const nodes = Array.isArray(data.nodes) ? data.nodes : [];
+
+    if (nodes.length === 0) {
+      trafficNodes = [];
+      renderMap();
+      updateStatistics();
+      return;
+    }
+
+    // lat/lon arrays with safe numbers
+    const lats = nodes.map(n => Number(n.lat) || 0);
+    const lons = nodes.map(n => Number(n.lon) || 0);
+    const minLat = Math.min(...lats), maxLat = Math.max(...lats);
+    const minLon = Math.min(...lons), maxLon = Math.max(...lons);
+    const latRange = (maxLat - minLat) || 1;
+    const lonRange = (maxLon - minLon) || 1;
+
+    // normalizer for congestion -> 0..100
+    const rawCongestions = nodes.map(n => Number(n.congestion) || 0);
+    const norm = normalizeCongestionsArray(rawCongestions);
+
+    // build nodes with jittered x,y
+    const jitter = 18;
+    trafficNodes = nodes.map((n, idx) => {
+      // server id might be zero-based; keep display as N### using n.id+1
+      const displayId = `N${String((Number(n.id) || idx) + 1).padStart(3, "0")}`;
+      const raw = Number(n.congestion) || 0;
+      const normalized = norm.fn(raw); // 0..100
+      const x = 100 + ((Number(n.lon) - minLon) / lonRange) * 600 + (Math.random() - 0.5) * jitter;
+      const y = 100 + ((maxLat - Number(n.lat)) / latRange) * 400 + (Math.random() - 0.5) * jitter;
+
+      return {
+        origId: Number(n.id) || idx,
+        id: displayId,
+        baseCongestion: normalized,
+        timing: Math.round(normalized / 2),
+        x, y
+      };
+    });
+
+    // run force layout to spread nodes (fast)
+    applyForceLayout(220);
+
+    // Now render + stats
+    renderMap();
+    updateStatistics();
+    updateLastUpdateTime();
+
+  } catch (err) {
+    console.error("fetchRealTrafficData error:", err);
+    alert("Failed to fetch graph data — check server and CORS. See console for details.");
+  }
+}
+
+/* ---------- Effective congestion (mode + severity) ---------- */
+function getEffectiveCongestion(node) {
+  const modeFactor = currentMode === "peak" ? 1.5 : currentMode === "incident" ? 1.8 : 1.0;
+  return Math.min(100, node.baseCongestion * modeFactor * severityMultiplier);
+}
+
+/* ---------- Rendering ---------- */
+function renderMap() {
+  const mapNodes = document.getElementById("mapNodes");
+  const mapEdges = document.getElementById("mapEdges");
+  mapNodes.innerHTML = "";
+  mapEdges.innerHTML = "";
+
+  // edges: proximity-based
+  for (let i = 0; i < trafficNodes.length; i++) {
+    for (let j = i + 1; j < trafficNodes.length; j++) {
+      const a = trafficNodes[i], b = trafficNodes[j];
+      const dx = a.x - b.x, dy = a.y - b.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 140) {
+        const line = document.createElementNS("http://www.w3.org/2000/svg","line");
+        line.setAttribute("x1", a.x); line.setAttribute("y1", a.y);
+        line.setAttribute("x2", b.x); line.setAttribute("y2", b.y);
+        line.setAttribute("stroke", "#CBD5E1"); line.setAttribute("stroke-width", "1"); line.setAttribute("opacity", "0.18");
+        mapEdges.appendChild(line);
+      }
+    }
+  }
+
+  // compute hotspots (top 3 by effective congestion)
+  const topHotspots = [...trafficNodes].sort((A,B) => getEffectiveCongestion(B) - getEffectiveCongestion(A)).slice(0,3);
+
+  // nodes
+  for (let node of trafficNodes) {
+    const eff = getEffectiveCongestion(node);
+    const color = getNodeColor(eff);
+    const size = getNodeSize(eff);
+
+    // circle
+    const circle = document.createElementNS("http://www.w3.org/2000/svg","circle");
+    circle.setAttribute("cx", node.x);
+    circle.setAttribute("cy", node.y);
+    circle.setAttribute("r", size);
+    circle.setAttribute("fill", color);
+    circle.setAttribute("stroke", "#FFFFFF");
+    circle.setAttribute("stroke-width", "2");
+    circle.setAttribute("class", "transition-smooth cursor-pointer");
+    circle.dataset.nodeId = node.id;
+
+    circle.addEventListener("click", () => selectNode(node));
+    circle.addEventListener("mouseenter", (e) => showTooltip(e, node));
+    circle.addEventListener("mouseleave", hideTooltip);
+    circle.addEventListener("contextmenu", (e) => { e.preventDefault(); console.log("Set as destination:", node.id); });
+
+    mapNodes.appendChild(circle);
+
+    // pulse for hotspots (append behind the circle)
+    if (topHotspots.includes(node)) {
+      const pulse = document.createElementNS("http://www.w3.org/2000/svg","circle");
+      pulse.setAttribute("cx", node.x); pulse.setAttribute("cy", node.y);
+      pulse.setAttribute("r", size);
+      pulse.setAttribute("fill", "none"); pulse.setAttribute("stroke", color); pulse.setAttribute("stroke-width", "2"); pulse.setAttribute("opacity", "0.6");
+      pulse.innerHTML = `
+        <animate attributeName="r" from="${size}" to="${size+10}" dur="2s" repeatCount="indefinite" />
+        <animate attributeName="opacity" from="0.6" to="0" dur="2s" repeatCount="indefinite" />
+      `;
+      mapNodes.appendChild(pulse);
+    }
+  }
+
+  updateHotspotsList();
+}
+
+/* ---------- Tooltip / selection ---------- */
+const tooltip = document.getElementById("nodeTooltip");
+function showTooltip(e, node) {
+  document.getElementById("tooltipNodeId").textContent = `Node ${node.id}`;
+  document.getElementById("tooltipCongestion").textContent = Math.round(getEffectiveCongestion(node));
+  // optional timing visible if you need:
+  // document.getElementById("tooltipTiming").textContent = node.timing;
+  tooltip.style.left = `${e.pageX + 10}px`;
+  tooltip.style.top = `${e.pageY + 10}px`;
+  tooltip.classList.remove("hidden");
+}
+function hideTooltip() { tooltip.classList.add("hidden"); }
+
+function selectNode(node) {
+  selectedNode = node;
+  document.getElementById("nodeInfo").classList.remove("hidden");
+  document.getElementById("nodeId").textContent = node.id;
+  document.getElementById("nodeCongestion").textContent = Math.round(getEffectiveCongestion(node));
+  document.getElementById("nodeTiming").textContent = node.timing;
+  // re-render to keep consistent highlight/pulse order
+  renderMap();
+}
+
+/* ---------- Hotspots list ---------- */
+function updateHotspotsList() {
+  const hotspotsList = document.getElementById("hotspotsList");
+  const top = [...trafficNodes].sort((a,b) => getEffectiveCongestion(b) - getEffectiveCongestion(a)).slice(0,3);
+  hotspotsList.innerHTML = top.map((node, idx) => {
+    const c = Math.round(getEffectiveCongestion(node));
+    const color = getNodeColor(c);
+    return `
+      <div class="flex items-center justify-between p-3 rounded-lg bg-secondary-50 border border-border hover:border-border-hover transition-smooth cursor-pointer" onclick="(function(){ const n=trafficNodes.find(t=>t.id==='${node.id}'); if(n)selectNode(n); })()">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-lg flex items-center justify-center font-semibold text-sm" style="background-color: ${color}20; color: ${color}">${idx+1}</div>
+          <div>
+            <div class="text-sm font-semibold text-text-primary">${node.id}</div>
+            <div class="text-xs text-text-secondary">Intersection ${node.id.slice(1)}</div>
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-sm font-mono font-semibold" style="color:${color}">${c}</div>
+          <div class="text-xs text-text-secondary">congestion</div>
+        </div>
+      </div>
+    `;
+  }).join("") || `<div class="text-xs text-text-secondary">No hotspots</div>`;
+}
+
+/* ---------- Stats update ---------- */
+function updateStatistics() {
+  if (!trafficNodes || trafficNodes.length === 0) {
+    document.getElementById("avgCongestion").textContent = "0.0";
+    document.getElementById("activeIncidents").textContent = "0";
+    document.getElementById("routeEfficiency").textContent = "0%";
+    document.getElementById("networkLoad").textContent = "0%";
+    document.getElementById("activeNodes").textContent = "0";
+    return;
+  }
+  const avg = trafficNodes.reduce((s,n) => s + getEffectiveCongestion(n), 0) / trafficNodes.length;
+  document.getElementById("avgCongestion").textContent = avg.toFixed(1);
+  document.getElementById("activeIncidents").textContent = trafficNodes.filter(n => getEffectiveCongestion(n) > 80).length;
+  document.getElementById("routeEfficiency").textContent = `${(100 - avg/2).toFixed(1)}%`;
+  document.getElementById("networkLoad").textContent = `${Math.round(avg)}%`;
+  document.getElementById("activeNodes").textContent = trafficNodes.length;
+}
+
+/* ---------- Mode / severity controls ---------- */
+function updateSimulationMode(mode) {
+  currentMode = mode;
+  renderMap();
+  updateStatistics();
+}
+function updateTrafficSeverity(mult) {
+  severityMultiplier = Number(mult) || 1.0;
+  renderMap();
+  updateStatistics();
+}
+
+/* ---------- Refresh / last update ---------- */
+async function refreshData() {
+  const loading = document.getElementById("mapLoading");
+  loading.classList.remove("hidden");
+  await fetchRealTrafficData();
+  loading.classList.add("hidden");
+}
+
+function updateLastUpdateTime() {
+  const now = new Date();
+  const timeString = now.toLocaleTimeString("en-US", { hour12: false, hour: "2-digit", minute: "2-digit", second: "2-digit" });
+  document.getElementById("lastUpdateTime").textContent = timeString;
+}
+
+/* ---------- Export CSV ---------- */
+document.getElementById("exportCSV").addEventListener("click", () => {
+  const csv = [
+    ["Node ID","Congestion","X","Y","Suggested Timing"],
+    ...trafficNodes.map(n => [ n.id, Math.round(getEffectiveCongestion(n)), n.x.toFixed(2), n.y.toFixed(2), n.timing ])
+  ].map(r => r.join(",")).join("\n");
+  const blob = new Blob([csv], { type: "text/csv" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a"); a.href = url; a.download = `traffic_data_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+});
+
+/* ---------- Zoom controls ---------- */
+document.getElementById("zoomIn").addEventListener("click", () => { zoomLevel = Math.min(2, zoomLevel + 0.2); document.getElementById("trafficMap").style.transform = `scale(${zoomLevel})`; });
+document.getElementById("zoomOut").addEventListener("click", () => { zoomLevel = Math.max(0.5, zoomLevel - 0.2); document.getElementById("trafficMap").style.transform = `scale(${zoomLevel})`; });
+document.getElementById("resetZoom").addEventListener("click", () => { zoomLevel = 1; document.getElementById("trafficMap").style.transform = "scale(1)"; });
+
+/* ---------- Auto-refresh interval wiring ---------- */
+document.getElementById("refreshInterval").addEventListener("change", (e) => {
+  clearInterval(refreshInterval);
+  const interval = parseInt(e.target.value,10) * 1000;
+  refreshInterval = setInterval(refreshData, interval);
+});
+
+/* ---------- Init ---------- */
+async function init() {
+  await fetchRealTrafficData();
+  updateLastUpdateTime();
+  // start auto-refresh default 60s (if select not changed)
+  clearInterval(refreshInterval);
+  refreshInterval = setInterval(refreshData, 60000);
+  // update clock every second
+  setInterval(updateLastUpdateTime, 1000);
+}
+init();
+
+</script>
+
+    <script
+      id="dhws-dataInjector"
+      src="../public/dhws-data-injector.js"
+    ></script>
+  </body>
+</html>

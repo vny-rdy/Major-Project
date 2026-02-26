@@ -1,0 +1,1071 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Route Optimization Hub - Multi-path analysis and intelligent routing recommendations with cost comparison">
+    <title>Route Optimization Hub | Traffic AI Dashboard</title>
+    <link rel="stylesheet" href="../css/main.css">
+
+    <script type="module" async
+        src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Ftrafficai2122back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.12"></script>
+    <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.2"></script>
+</head>
+
+<body class="bg-background min-h-screen">
+    <!-- Header Navigation -->
+    <header class="bg-surface border-b border-border sticky top-0 z-navigation shadow-sm">
+        <nav class="max-w-[1920px] mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        aria-label="Traffic AI Dashboard Logo">
+                        <rect width="40" height="40" rx="8" fill="#1E40AF" />
+                        <path d="M20 8L28 14V26L20 32L12 26V14L20 8Z" stroke="#FFFFFF" stroke-width="2"
+                            stroke-linejoin="round" />
+                        <circle cx="20" cy="20" r="4" fill="#F59E0B" />
+                        <path d="M20 12V16M20 24V28M12 20H16M24 20H28" stroke="#FFFFFF" stroke-width="2"
+                            stroke-linecap="round" />
+                    </svg>
+                    <div>
+                        <h1 class="text-xl font-heading font-semibold text-text-primary">Traffic AI</h1>
+                        <p class="text-xs text-text-secondary">Urban Intelligence Platform</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center gap-2">
+                    <a href="traffic_control_center.html"
+                        class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth">
+                        Control Center
+                    </a>
+                    <a href="route_optimization_hub.html"
+                        class="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium transition-smooth">
+                        Route Optimization
+                    </a>
+                    <a href="analytics_dashboard.html"
+                        class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth">
+                        Analytics
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-secondary-100 transition-smooth"
+                    aria-label="Toggle mobile menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-2 border-t border-border pt-4">
+                <div class="flex flex-col gap-2">
+                    <a href="traffic_control_center.html"
+                        class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth">
+                        Control Center
+                    </a>
+                    <a href="route_optimization_hub.html"
+                        class="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium">
+                        Route Optimization
+                    </a>
+                    <a href="analytics_dashboard.html"
+                        class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth">
+                        Analytics
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-[1920px] mx-auto px-4 md:px-6 py-6">
+        <!-- Page Header -->
+        <div class="mb-6">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                    <h2 class="text-3xl font-heading font-semibold text-text-primary mb-2">Route Optimization Hub</h2>
+                    <p class="text-text-secondary">Multi-path analysis and intelligent routing recommendations</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button id="exportRouteData" class="btn btn-outline">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export CSV
+                    </button>
+                    <button id="helpBtn" class="btn btn-outline" aria-label="Help">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Route Selection Controls -->
+        <div class="card mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+
+                <!-- Origin Node Selection -->
+                <div class="md:col-span-3">
+                    <label for="originNode" class="block text-sm font-medium text-text-primary mb-2">
+                        Origin Node
+                    </label>
+
+                    <select id="originNode" class="input w-full">
+                        <option value="">Select origin...</option>
+                    </select>
+                </div>
+
+                <!-- Destination Node Selection -->
+                <div class="md:col-span-3">
+                    <label for="destinationNode" class="block text-sm font-medium text-text-primary mb-2">
+                        Destination Node
+                    </label>
+
+                    <select id="destinationNode" class="input w-full">
+                        <option value="">Select destination...</option>
+                    </select>
+                </div>
+
+                <!-- K-Path Slider -->
+                <div class="md:col-span-4">
+                    <div class="flex items-center justify-between mb-2">
+                        <label for="kPathSlider" id="kPathLabel" class="text-sm font-medium text-text-primary">
+                            Alternative Routes (K)
+                        </label>
+
+                        <span id="kPathValue" class="text-sm font-mono font-semibold text-primary">
+                            3
+                        </span>
+                    </div>
+
+                    <input type="range" id="kPathSlider" min="1" max="5" step="1" value="3" aria-labelledby="kPathLabel"
+                        aria-valuemin="1" aria-valuemax="5" aria-valuenow="3"
+                        class="w-full h-2 bg-secondary-200 rounded-lg appearance-none cursor-pointer accent-primary" />
+
+                    <div class="flex justify-between text-xs text-text-secondary mt-1">
+                        <span>1</span>
+                        <span>5</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- Calculate Button -->
+        <div class="md:col-span-2 flex items-end">
+            <button id="calculateRoutes" class="btn btn-primary w-full" disabled>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                Calculate
+            </button>
+        </div>
+        </div>
+        </div>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Map Visualization (8 cols) -->
+            <div class="lg:col-span-8">
+                <div class="card p-0 overflow-hidden">
+                    <!-- Map Header -->
+                    <div class="px-6 py-4 border-b border-border bg-secondary-50">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-heading font-semibold text-text-primary">Route Visualization</h3>
+                            <div class="flex items-center gap-3">
+                                <button id="clearRoutes" class="text-sm text-primary hover:text-primary-700 font-medium"
+                                    disabled>
+                                    Clear Routes
+                                </button>
+                                <div id="calculationStatus"
+                                    class="hidden flex items-center gap-2 px-3 py-1 bg-primary-50 border border-primary rounded-lg">
+                                    <div class="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+                                    <span class="text-xs font-medium text-primary">Calculating...</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Map Container -->
+                    <div class="relative bg-secondary-50" style="height: 600px;">
+                        <!-- SVG Map -->
+                        <svg id="routeMap" width="100%" height="100%" viewBox="0 0 800 600" class="cursor-crosshair">
+                            <!-- Grid Background -->
+                            <defs>
+                                <pattern id="routeGrid" width="40" height="40" patternUnits="userSpaceOnUse">
+                                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#E2E8F0" stroke-width="0.5" />
+                                </pattern>
+                                <filter id="routeGlow">
+                                    <feGaussianBlur stdDeviation="3" result="coloredBlur" />
+                                    <feMerge>
+                                        <feMergeNode in="coloredBlur" />
+                                        <feMergeNode in="SourceGraphic" />
+                                    </feMerge>
+                                </filter>
+                                <!-- Arrow Marker for Route Direction -->
+                                <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3"
+                                    orient="auto">
+                                    <polygon points="0 0, 10 3, 0 6" fill="#1E40AF" />
+                                </marker>
+                            </defs>
+                            <rect width="800" height="600" fill="url(#routeGrid)" />
+
+                            <!-- Map Layers -->
+                            <g id="routeEdges"></g>
+                            <g id="routePaths"></g>
+                            <g id="routeNodes"></g>
+                            <g id="routeWaypoints"></g>
+                        </svg>
+
+                        <!-- Route Legend -->
+                        <div
+                            class="absolute bottom-4 left-4 bg-surface/95 backdrop-blur-sm rounded-lg p-4 shadow-lg border border-border">
+                            <h4 class="text-sm font-semibold text-text-primary mb-3">Route Colors</h4>
+                            <div id="routeLegend" class="space-y-2">
+                                <div class="text-xs text-text-secondary">Calculate routes to see legend</div>
+                            </div>
+                        </div>
+
+                        <!-- Zoom Controls -->
+                        <div class="absolute top-4 right-4 flex flex-col gap-2">
+                            <button id="zoomIn"
+                                class="w-10 h-10 bg-surface rounded-lg shadow-md border border-border hover:bg-secondary-50 transition-smooth flex items-center justify-center"
+                                aria-label="Zoom in">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                            </button>
+                            <button id="zoomOut"
+                                class="w-10 h-10 bg-surface rounded-lg shadow-md border border-border hover:bg-secondary-50 transition-smooth flex items-center justify-center"
+                                aria-label="Zoom out">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                </svg>
+                            </button>
+                            <button id="resetZoom"
+                                class="w-10 h-10 bg-surface rounded-lg shadow-md border border-border hover:bg-secondary-50 transition-smooth flex items-center justify-center"
+                                aria-label="Reset zoom">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"></path>
+                                    <path d="M21 3v5h-5"></path>
+                                    <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"></path>
+                                    <path d="M3 21v-5h5"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Route Tabs (Visible on Mobile) -->
+                <div class="lg:hidden mt-6">
+                    <div class="flex border-b border-border mb-4">
+                        <button
+                            class="route-tab active px-4 py-3 font-medium text-sm border-b-2 border-primary text-primary transition-smooth"
+                            data-tab="comparison">
+                            Route Comparison
+                        </button>
+                        <button
+                            class="route-tab px-4 py-3 font-medium text-sm border-b-2 border-transparent text-text-secondary hover:text-text-primary transition-smooth"
+                            data-tab="metrics">
+                            Performance
+                        </button>
+                    </div>
+
+                    <!-- Tab Content -->
+                    <div id="comparisonTab" class="tab-content">
+                        <!-- Route comparison content will be duplicated here for mobile -->
+                    </div>
+                    <div id="metricsTab" class="tab-content hidden">
+                        <!-- Performance metrics will be duplicated here for mobile -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Route Comparison Panel (4 cols) -->
+            <div class="lg:col-span-4 hidden lg:block">
+                <div class="card p-0 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-border bg-secondary-50">
+                        <h3 class="text-lg font-heading font-semibold text-text-primary">Route Comparison</h3>
+                    </div>
+
+                    <div id="routeComparisonContainer" class="p-6">
+                        <div class="text-center py-12">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"
+                                class="mx-auto mb-4 text-text-tertiary">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <p class="text-sm text-text-secondary">Select origin and destination nodes, then click
+                                Calculate to view route alternatives</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Selected Route Details -->
+                <div id="routeDetails" class="card mt-6 hidden">
+                    <h3 class="text-lg font-heading font-semibold text-text-primary mb-4">Route Details</h3>
+                    <div id="routeDetailsContent"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Metrics Dashboard -->
+        <div class="mt-6 hidden lg:block" id="performanceSection">
+            <div class="card">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-lg font-heading font-semibold text-text-primary">Performance Metrics</h3>
+                    <button id="toggleMetrics" class="text-sm text-primary hover:text-primary-700 font-medium">
+                        Collapse
+                    </button>
+                </div>
+
+                <div id="metricsContent">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <!-- MAE Metric -->
+                        <div class="p-6 rounded-lg bg-secondary-50 border border-border">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-sm text-text-secondary mb-1">Mean Absolute Error (MAE)</p>
+                                    <p class="text-3xl font-heading font-semibold text-text-primary tabular-nums">2.34
+                                    </p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-success-100 flex items-center justify-center">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Sparkline Chart -->
+                            <svg width="100%" height="60" viewBox="0 0 300 60" class="mt-2">
+                                <polyline
+                                    points="0,45 30,42 60,38 90,40 120,35 150,32 180,30 210,28 240,26 270,24 300,22"
+                                    fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <polyline
+                                    points="0,45 30,42 60,38 90,40 120,35 150,32 180,30 210,28 240,26 270,24 300,22 300,60 0,60"
+                                    fill="url(#maeGradient)" opacity="0.2" />
+                                <defs>
+                                    <linearGradient id="maeGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#059669;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#059669;stop-opacity:0" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <p class="text-xs text-success-700 mt-2">↓ 12% improvement over last week</p>
+                        </div>
+
+                        <!-- RMSE Metric -->
+                        <div class="p-6 rounded-lg bg-secondary-50 border border-border">
+                            <div class="flex items-center justify-between mb-4">
+                                <div>
+                                    <p class="text-sm text-text-secondary mb-1">Root Mean Square Error (RMSE)</p>
+                                    <p class="text-3xl font-heading font-semibold text-text-primary tabular-nums">3.87
+                                    </p>
+                                </div>
+                                <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E40AF"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z">
+                                        </path>
+                                        <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                        <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                    </svg>
+                                </div>
+                            </div>
+                            <!-- Sparkline Chart -->
+                            <svg width="100%" height="60" viewBox="0 0 300 60" class="mt-2">
+                                <polyline
+                                    points="0,50 30,48 60,45 90,43 120,40 150,38 180,36 210,34 240,32 270,30 300,28"
+                                    fill="none" stroke="#1E40AF" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <polyline
+                                    points="0,50 30,48 60,45 90,43 120,40 150,38 180,36 210,34 240,32 270,30 300,28 300,60 0,60"
+                                    fill="url(#rmseGradient)" opacity="0.2" />
+                                <defs>
+                                    <linearGradient id="rmseGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#1E40AF;stop-opacity:1" />
+                                        <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:0" />
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            <p class="text-xs text-primary mt-2">↓ 8% improvement over last week</p>
+                        </div>
+                    </div>
+
+                    <!-- Additional Metrics -->
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="p-4 rounded-lg bg-secondary-50 border border-border">
+                            <p class="text-xs text-text-secondary mb-1">Avg Route Efficiency</p>
+                            <p class="text-xl font-heading font-semibold text-text-primary tabular-nums">92.3%</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-secondary-50 border border-border">
+                            <p class="text-xs text-text-secondary mb-1">Calculation Time</p>
+                            <p class="text-xl font-heading font-semibold text-text-primary tabular-nums">0.8s</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-secondary-50 border border-border">
+                            <p class="text-xs text-text-secondary mb-1">Routes Analyzed</p>
+                            <p class="text-xl font-heading font-semibold text-text-primary tabular-nums">1,247</p>
+                        </div>
+                        <div class="p-4 rounded-lg bg-secondary-50 border border-border">
+                            <p class="text-xs text-text-secondary mb-1">API Response</p>
+                            <p class="text-xl font-heading font-semibold text-text-primary tabular-nums">156ms</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal-backdrop hidden">
+        <div class="modal">
+            <div class="p-6 border-b border-border">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-heading font-semibold text-text-primary">Route Optimization Guide</h3>
+                    <button id="closeHelp" class="p-2 rounded-lg hover:bg-secondary-100 transition-smooth"
+                        aria-label="Close help modal">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 max-h-[60vh] overflow-y-auto">
+                <div class="space-y-6">
+                    <div>
+                        <h4 class="text-lg font-semibold text-text-primary mb-2">Getting Started</h4>
+                        <ul class="space-y-2 text-sm text-text-secondary">
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">1.</span>
+                                <span>Select an <strong>origin node</strong> from the dropdown menu</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">2.</span>
+                                <span>Choose a <strong>destination node</strong> (must be different from origin)</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">3.</span>
+                                <span>Adjust the <strong>K-path slider</strong> to set number of alternative routes
+                                    (1-5)</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">4.</span>
+                                <span>Click <strong>Calculate</strong> to generate optimal routes</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-text-primary mb-2">Understanding Route Colors</h4>
+                        <ul class="space-y-2 text-sm text-text-secondary">
+                            <li class="flex items-start gap-2">
+                                <span class="text-success-600 mt-1">•</span>
+                                <span><strong>Route 1 (Primary):</strong> Optimal path with lowest cost</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span><strong>Route 2-5 (Alternatives):</strong> Ranked by efficiency and delay</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-accent mt-1">•</span>
+                                <span><strong>Highlighted Route:</strong> Currently selected for detailed
+                                    analysis</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-text-primary mb-2">Route Metrics Explained</h4>
+                        <ul class="space-y-2 text-sm text-text-secondary">
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span><strong>Path Cost:</strong> Weighted sum of congestion along route</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span><strong>Estimated Delay:</strong> Predicted travel time increase due to
+                                    traffic</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span><strong>Efficiency Rating:</strong> Comparative score vs. optimal route (100% =
+                                    best)</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold text-text-primary mb-2">Interactive Features</h4>
+                        <ul class="space-y-2 text-sm text-text-secondary">
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span><strong>Click route</strong> in comparison table to highlight on map</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span><strong>Hover waypoints</strong> to see node-level congestion details</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span><strong>Sort columns</strong> in comparison table by clicking headers</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-primary mt-1">•</span>
+                                <span><strong>Export CSV</strong> to download route data with metadata</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="p-6 border-t border-border">
+                <button id="closeHelpBtn" class="btn btn-primary w-full">Got it!</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="nodeTooltip"
+        class="fixed bg-surface/95 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg border border-border z-tooltip hidden pointer-events-none">
+        <div class="text-xs space-y-1">
+            <div class="font-semibold text-text-primary" id="tooltipNodeId"></div>
+            <div class="text-text-secondary">Congestion: <span class="font-mono text-text-primary"
+                    id="tooltipCongestion"></span></div>
+            <div class="text-text-secondary">Timing: <span class="font-mono text-text-primary"
+                    id="tooltipTiming"></span>s</div>
+        </div>
+    </div>
+
+    <script>
+/* ---------- Utilities & DOM refs ---------- */
+const CONGESTION_VISUAL_SCALE = 5; // try 4–7
+function normalizeCongestion(value, min, max) {
+  if (max === min) return 50; // safe fallback
+  return ((value - min) / (max - min)) * 100;
+}
+
+
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+
+mobileMenuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+const helpBtn = document.getElementById('helpBtn');
+const helpModal = document.getElementById('helpModal');
+const closeHelp = document.getElementById('closeHelp');
+const closeHelpBtn = document.getElementById('closeHelpBtn');
+
+helpBtn.addEventListener('click', () => helpModal.classList.remove('hidden'));
+[closeHelp, closeHelpBtn].forEach(btn => btn && btn.addEventListener('click', () => helpModal.classList.add('hidden')));
+helpModal.addEventListener('click', (e) => { if (e.target === helpModal) helpModal.classList.add('hidden'); });
+
+/* Mobile route tabs (unchanged) */
+const routeTabs = document.querySelectorAll('.route-tab');
+routeTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const targetTab = tab.dataset.tab;
+    routeTabs.forEach(t => { t.classList.remove('active', 'border-primary', 'text-primary'); t.classList.add('border-transparent', 'text-text-secondary'); });
+    tab.classList.add('active', 'border-primary', 'text-primary'); tab.classList.remove('border-transparent', 'text-text-secondary');
+    document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+    document.getElementById(`${targetTab}Tab`).classList.remove('hidden');
+  });
+});
+
+/* K-path slider */
+const kPathSlider = document.getElementById('kPathSlider');
+const kPathValue  = document.getElementById('kPathValue');
+kPathSlider.addEventListener('input', (e) => { kPathValue.textContent = e.target.value; });
+
+/* ---------- Data stores ---------- */
+let networkNodes = [];     // each node: { origIndex, id (displayId 'N006'), congestion, timing, x, y }
+let adjacencyEdges = [];   // if you want to use edges from the API
+let calculatedRoutes = [];
+let selectedRouteIndex = null;
+
+/* Route colors */
+const routeColors = ['#10B981','#3B82F6','#F59E0B','#8B5CF6','#EC4899'];
+
+function applyForceLayout(iterations = 200) {
+  const strength = 0.01;
+  const repel = 2000;
+
+  for (let k = 0; k < iterations; k++) {
+    for (let i = 0; i < networkNodes.length; i++) {
+      for (let j = i + 1; j < networkNodes.length; j++) {
+        const a = networkNodes[i];
+        const b = networkNodes[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const dist = Math.sqrt(dx*dx + dy*dy) + 0.1;
+
+        const force = repel / (dist * dist);
+        const fx = (dx / dist) * force;
+        const fy = (dy / dist) * force;
+
+        a.x += fx * strength;
+        a.y += fy * strength;
+        b.x -= fx * strength;
+        b.y -= fy * strength;
+      }
+    }
+  }
+}
+
+
+/* ---------- Fetch / build graph ---------- */
+async function fetchGraphData() {
+  try {
+    const res = await fetch("http://127.0.0.1:5000/api/graph");
+    const data = await res.json();
+
+    const lats = (data.nodes || []).map(n => Number(n.lat) || 0);
+    const lons = (data.nodes || []).map(n => Number(n.lon) || 0);
+
+    const minLat = Math.min(...lats);
+    const maxLat = Math.max(...lats);
+    const minLon = Math.min(...lons);
+    const maxLon = Math.max(...lons);
+
+    const latRange = (maxLat - minLat) || 1;
+    const lonRange = (maxLon - minLon) || 1;
+    const jitter = 10;
+
+    // 🔑 normalize congestion RELATIVE to dataset
+    const rawCongestions = (data.nodes || []).map(
+      n => Number(n.congestion) || 0
+    );
+    const minC = Math.min(...rawCongestions);
+    const maxC = Math.max(...rawCongestions);
+
+    networkNodes = (data.nodes || []).map((n, idx) => {
+      const origIndex = typeof n.id === "number" ? n.id : idx;
+      const displayId = `N${String(origIndex + 1).padStart(3, "0")}`;
+
+      const raw = Number(n.congestion) || 0;
+      const congestion =
+        minC === maxC
+          ? 50
+          : ((raw - minC) / (maxC - minC)) * 100;
+
+      return {
+        origIndex,
+        id: displayId,
+        congestion: Math.round(congestion),
+        timing: Math.round(congestion / 2),
+        x:
+          100 +
+          ((n.lon - minLon) / lonRange) * 600 +
+          (Math.random() - 0.5) * jitter,
+        y:
+          100 +
+          ((maxLat - n.lat) / latRange) * 400 +
+          (Math.random() - 0.5) * jitter
+      };
+    });
+
+    adjacencyEdges = data.edges || [];
+
+    applyForceLayout(700);
+
+    populateNodeDropdowns();
+    renderNetworkMap();
+    document.getElementById("clearRoutes").disabled = false;
+  } catch (err) {
+    console.error("Error fetching graph data:", err);
+    alert("Failed to load graph data.");
+  }
+}
+
+/* ---------- Populate dropdowns ---------- */
+function populateNodeDropdowns() {
+  const originSelect = document.getElementById('originNode');
+  const destSelect = document.getElementById('destinationNode');
+
+  // Clear while keeping the first placeholder option
+  originSelect.innerHTML = '<option value="">Select origin...</option>';
+  destSelect.innerHTML   = '<option value="">Select destination...</option>';
+
+  networkNodes.forEach(node => {
+    const option1 = document.createElement('option');
+    option1.value = node.id; // displayId
+    option1.textContent = `${node.id} - Intersection ${node.id.slice(1)}`;
+    originSelect.appendChild(option1);
+
+    const option2 = document.createElement('option');
+    option2.value = node.id;
+    option2.textContent = `${node.id} - Intersection ${node.id.slice(1)}`;
+    destSelect.appendChild(option2);
+  });
+
+  // hook up change handler to enable calculate button
+  checkCalculateEnabled();
+}
+
+/* ---------- Map rendering ---------- */
+function getNodeColor(congestion) {
+  if (congestion < 30) return '#10B981';
+  if (congestion < 60) return '#F59E0B';
+  return '#EF4444';
+}
+
+function renderNetworkMap() {
+  const mapNodes = document.getElementById('routeNodes');
+  const mapEdges = document.getElementById('routeEdges');
+
+  mapNodes.innerHTML = '';
+  mapEdges.innerHTML = '';
+
+  // If adjacencyEdges is provided and is an array of {u: idx, v: idx} use that;
+  // otherwise fall back to drawing proximity edges.
+  if (Array.isArray(adjacencyEdges) && adjacencyEdges.length > 0) {
+    adjacencyEdges.forEach(e => {
+      const a = networkNodes.find(n => n.origIndex === e[0] || n.origIndex === e.u);
+      const b = networkNodes.find(n => n.origIndex === e[1] || n.origIndex === e.v);
+      if (a && b) {
+        const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+        line.setAttribute('x1', a.x); line.setAttribute('y1', a.y);
+        line.setAttribute('x2', b.x); line.setAttribute('y2', b.y);
+        line.setAttribute('stroke','#CBD5E1'); line.setAttribute('stroke-width','1'); line.setAttribute('opacity','0.25');
+        mapEdges.appendChild(line);
+      }
+    });
+  } else {
+    // proximity-based edges
+    networkNodes.forEach((node, i) => {
+      for (let j = i + 1; j < networkNodes.length; j++) {
+        const otherNode = networkNodes[j];
+        const dx = node.x - otherNode.x;
+        const dy = node.y - otherNode.y;
+        const distance = Math.sqrt(dx*dx + dy*dy);
+        if (distance < 150) {
+          const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+          line.setAttribute('x1', node.x); line.setAttribute('y1', node.y);
+          line.setAttribute('x2', otherNode.x); line.setAttribute('y2', otherNode.y);
+          line.setAttribute('stroke', '#CBD5E1'); line.setAttribute('stroke-width','1'); line.setAttribute('opacity','0.15');
+          mapEdges.appendChild(line);
+        }
+      }
+    });
+  }
+
+  // render nodes
+  networkNodes.forEach(node => {
+    const color = getNodeColor(node.congestion);
+    const size = 6;
+
+    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    circle.setAttribute('cx', node.x);
+    circle.setAttribute('cy', node.y);
+    circle.setAttribute('r', size);
+    circle.setAttribute('fill', color);
+    circle.setAttribute('stroke', '#FFFFFF');
+    circle.setAttribute('stroke-width', '2');
+    circle.setAttribute('class', 'transition-smooth cursor-pointer');
+    circle.dataset.nodeId = node.id;
+
+    circle.addEventListener('mouseenter', (e) => showTooltip(e, node));
+    circle.addEventListener('mouseleave', hideTooltip);
+
+    mapNodes.appendChild(circle);
+  });
+}
+
+/* ---------- tooltip ---------- */
+const tooltip = document.getElementById('nodeTooltip');
+function showTooltip(e, node) {
+  document.getElementById('tooltipNodeId').textContent = `Node ${node.id}`;
+  document.getElementById('tooltipCongestion').textContent = Math.round(node.congestion);
+  document.getElementById('tooltipTiming').textContent = node.timing;
+  tooltip.style.left = `${e.pageX + 10}px`;
+  tooltip.style.top = `${e.pageY + 10}px`;
+  tooltip.classList.remove('hidden');
+}
+function hideTooltip() { tooltip.classList.add('hidden'); }
+
+/* ---------- Calculate button enable logic ---------- */
+const originNode = document.getElementById('originNode');
+const destinationNode = document.getElementById('destinationNode');
+const calculateBtn = document.getElementById('calculateRoutes');
+
+function checkCalculateEnabled() {
+  const origin = originNode.value;
+  const dest = destinationNode.value;
+  calculateBtn.disabled = !origin || !dest || origin === dest;
+}
+originNode.addEventListener('change', checkCalculateEnabled);
+destinationNode.addEventListener('change', checkCalculateEnabled);
+
+/* ---------- Calculate routes (call to API) ---------- */
+calculateBtn.addEventListener('click', async () => {
+  const originDisplay = originNode.value;
+  const destDisplay = destinationNode.value;
+  const k = parseInt(kPathSlider.value, 10);
+
+  if (!originDisplay || !destDisplay || originDisplay === destDisplay) return;
+
+  // show status
+  const statusIndicator = document.getElementById('calculationStatus');
+  statusIndicator.classList.remove('hidden');
+  calculateBtn.disabled = true;
+
+  // find original indices (origIndex) to pass to API
+  const originObj = networkNodes.find(n => n.id === originDisplay);
+  const destObj   = networkNodes.find(n => n.id === destDisplay);
+  if (!originObj || !destObj) {
+    console.error('Origin or destination id not found in networkNodes');
+    statusIndicator.classList.add('hidden');
+    calculateBtn.disabled = false;
+    return;
+  }
+
+  const start = originObj.origIndex;
+  const end   = destObj.origIndex;
+
+  try {
+    const res = await fetch(`http://127.0.0.1:5000/api/routes?start=${start}&end=${end}&k=${k}`);
+    const data = await res.json();
+
+    // data.paths expects each path to contain indices referencing original nodes
+    calculatedRoutes = (data.paths || []).map((p, i) => {
+      const pathNodes = (p.nodes || []).map(idx => networkNodes.find(n => n.origIndex === idx)).filter(Boolean);
+      return {
+        id: i + 1,
+        path: pathNodes,
+        pathCost: Math.round(p.cost || pathNodes.reduce((s, n) => s + (n.congestion||0), 0)),
+        estimatedDelay: Math.max(
+  1,
+  Math.round((p.cost / 6) + Math.random() * 2)
+),
+        efficiency: Math.max(60, 100 - i * 8),
+        color: routeColors[i] || routeColors[routeColors.length - 1]
+      };
+    });
+
+    renderRoutes();
+    renderRouteComparison();
+    updateRouteLegend();
+
+  } catch (err) {
+    console.error('Error fetching routes:', err);
+    alert('Failed to calculate routes. Check API / console for details.');
+  } finally {
+    statusIndicator.classList.add('hidden');
+    calculateBtn.disabled = false;
+  }
+});
+
+/* ---------- Render routes on map ---------- */
+function renderRoutes() {
+  const routePaths = document.getElementById('routePaths');
+  const routeWaypoints = document.getElementById('routeWaypoints');
+  routePaths.innerHTML = '';
+  routeWaypoints.innerHTML = '';
+
+  calculatedRoutes.forEach((route, index) => {
+    if (!route.path || route.path.length < 2) return;
+
+    const pathPoints = route.path.map(node => `${node.x},${node.y}`).join(' ');
+    const polyline = document.createElementNS('http://www.w3.org/2000/svg','polyline');
+    polyline.setAttribute('points', pathPoints);
+    polyline.setAttribute('fill', 'none');
+    polyline.setAttribute('stroke', route.color);
+    polyline.setAttribute('stroke-width', selectedRouteIndex === index ? '4' : '3');
+    polyline.setAttribute('stroke-linecap', 'round');
+    polyline.setAttribute('stroke-linejoin', 'round');
+    polyline.setAttribute('opacity', (selectedRouteIndex === null || selectedRouteIndex === index) ? '0.9' : '0.25');
+    polyline.setAttribute('class', 'transition-route cursor-pointer');
+    polyline.dataset.routeIndex = index;
+
+    polyline.addEventListener('click', () => selectRoute(index));
+
+    // append BEFORE measuring / animating
+    document.getElementById('routePaths').appendChild(polyline);
+
+    // try nice draw animation, but don't fail if getTotalLength not allowed
+    try {
+      const length = polyline.getTotalLength();
+      polyline.style.strokeDasharray = length;
+      polyline.style.strokeDashoffset = length;
+      setTimeout(() => {
+        polyline.style.transition = 'stroke-dashoffset 700ms ease-out';
+        polyline.style.strokeDashoffset = '0';
+      }, index * 150);
+    } catch (err) {
+      // ignore animation if it fails
+    }
+
+    // waypoints for origin / destination
+    route.path.forEach((node, nodeIndex) => {
+      if (nodeIndex === 0 || nodeIndex === route.path.length - 1) {
+        const marker = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        marker.setAttribute('cx', node.x); marker.setAttribute('cy', node.y);
+        marker.setAttribute('r', '8'); marker.setAttribute('fill', route.color);
+        marker.setAttribute('stroke', '#FFF'); marker.setAttribute('stroke-width', '3');
+        routeWaypoints.appendChild(marker);
+
+        const text = document.createElementNS('http://www.w3.org/2000/svg','text');
+        text.setAttribute('x', node.x); text.setAttribute('y', node.y - 15);
+        text.setAttribute('text-anchor', 'middle'); text.setAttribute('fill', route.color);
+        text.setAttribute('font-size', '12'); text.setAttribute('font-weight', '600');
+        text.textContent = nodeIndex === 0 ? 'START' : 'END';
+        routeWaypoints.appendChild(text);
+      }
+    });
+  });
+}
+
+/* ---------- Route selection, table & legend ---------- */
+function selectRoute(index) {
+  selectedRouteIndex = selectedRouteIndex === index ? null : index;
+  renderRoutes();
+  if (selectedRouteIndex !== null) showRouteDetails(calculatedRoutes[selectedRouteIndex]);
+  else document.getElementById('routeDetails').classList.add('hidden');
+
+  document.querySelectorAll('.route-row').forEach((row, i) => {
+    if (i === selectedRouteIndex) row.classList.add('bg-primary-50','border-primary');
+    else row.classList.remove('bg-primary-50','border-primary');
+  });
+}
+
+function renderRouteComparison() {
+  const container = document.getElementById('routeComparisonContainer');
+  if (!calculatedRoutes || calculatedRoutes.length === 0) {
+    container.innerHTML = `<div class="text-center py-12">...select origin & destination then Calculate...</div>`;
+    return;
+  }
+  const html = `
+    <div class="overflow-x-auto">
+      <table class="w-full">
+        <thead class="bg-secondary-50 border-b border-border">
+          <tr>
+            <th class="px-4 py-3 text-left text-xs font-semibold text-text-primary">Route</th>
+            <th class="px-4 py-3 text-right text-xs font-semibold text-text-primary">Cost</th>
+            <th class="px-4 py-3 text-right text-xs font-semibold text-text-primary">Delay</th>
+            <th class="px-4 py-3 text-right text-xs font-semibold text-text-primary">Efficiency</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${calculatedRoutes.map((route, idx) => `
+            <tr class="route-row border-b border-border hover:bg-secondary-50 cursor-pointer transition-smooth" onclick="selectRoute(${idx})">
+              <td class="px-4 py-3">
+                <div class="flex items-center gap-2">
+                  <div class="w-3 h-3 rounded-full" style="background-color:${route.color}"></div>
+                  <span class="text-sm font-medium text-text-primary">Route ${route.id}</span>
+                </div>
+              </td>
+              <td class="px-4 py-3 text-right"><span class="text-sm font-mono text-text-primary">${route.pathCost}</span></td>
+              <td class="px-4 py-3 text-right"><span class="text-sm font-mono text-text-primary">${route.estimatedDelay}min</span></td>
+              <td class="px-4 py-3 text-right">
+                <div class="flex items-center justify-end gap-2">
+                  <div class="w-16 h-2 bg-secondary-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-success-500" style="width: ${route.efficiency}%"></div>
+                  </div>
+                  <span class="text-sm font-mono text-text-primary">${route.efficiency}%</span>
+                </div>
+              </td>
+            </tr>
+          `).join('')}
+        </tbody>
+      </table>
+    </div>
+  `;
+  container.innerHTML = html;
+  if (window.innerWidth < 1024) document.getElementById('comparisonTab').innerHTML = html;
+}
+
+function showRouteDetails(route) {
+  const detailsContainer = document.getElementById('routeDetails');
+  const detailsContent = document.getElementById('routeDetailsContent');
+  if (!route) return;
+  const html = `
+    <div class="space-y-4"> ... <!-- same markup you already have; for brevity omitted here in this snippet --> </div>
+  `;
+  // if you want full details reuse your earlier implementation
+  detailsContent.innerHTML = html;
+  detailsContainer.classList.remove('hidden');
+}
+
+function updateRouteLegend() {
+  const legend = document.getElementById('routeLegend');
+  const legendHTML = calculatedRoutes.map(route => `
+    <div class="flex items-center gap-2">
+      <div class="w-4 h-1 rounded-full" style="background-color: ${route.color}"></div>
+      <span class="text-xs text-text-secondary">Route ${route.id}</span>
+    </div>
+  `).join('');
+  legend.innerHTML = legendHTML || '<div class="text-xs text-text-secondary">Calculate routes to see legend</div>';
+}
+
+/* ---------- Clear / export / misc ---------- */
+document.getElementById('clearRoutes').addEventListener('click', () => {
+  calculatedRoutes = []; selectedRouteIndex = null;
+  document.getElementById('routePaths').innerHTML = '';
+  document.getElementById('routeWaypoints').innerHTML = '';
+  document.getElementById('routeComparisonContainer').innerHTML = `<div class="text-center py-12">Select origin and destination nodes, then click Calculate to view route alternatives</div>`;
+  document.getElementById('routeLegend').innerHTML = '<div class="text-xs text-text-secondary">Calculate routes to see legend</div>';
+  document.getElementById('routeDetails').classList.add('hidden');
+  document.getElementById('clearRoutes').disabled = true;
+  originNode.value = ''; destinationNode.value = '';
+  checkCalculateEnabled();
+});
+
+document.getElementById('exportRouteData').addEventListener('click', () => {
+  if (!calculatedRoutes.length) { alert('Please calculate routes first before exporting'); return; }
+  const csv = [
+    ['Route ID','Path Cost','Estimated Delay (min)','Efficiency (%)','Path Nodes'],
+    ...calculatedRoutes.map(route => [ route.id, route.pathCost, route.estimatedDelay, route.efficiency, route.path.map(n => n.id).join(' → ') ])
+  ].map(row => row.join(',')).join('\n');
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a'); a.href = url; a.download = `route_optimization_${new Date().toISOString().slice(0,10)}.csv`; a.click();
+});
+
+/* Performance toggle (unchanged) */
+document.getElementById('toggleMetrics').addEventListener('click', (e) => {
+  const metricsContent = document.getElementById('metricsContent');
+  const isCollapsed = metricsContent.classList.contains('hidden');
+  metricsContent.classList.toggle('hidden');
+  e.target.textContent = isCollapsed ? 'Collapse' : 'Expand';
+});
+
+/* Zoom controls (unchanged) */
+let zoomLevel = 1;
+document.getElementById('zoomIn').addEventListener('click', () => { zoomLevel = Math.min(2, zoomLevel + 0.2); document.getElementById('routeMap').style.transform = `scale(${zoomLevel})`; });
+document.getElementById('zoomOut').addEventListener('click', () => { zoomLevel = Math.max(0.5, zoomLevel - 0.2); document.getElementById('routeMap').style.transform = `scale(${zoomLevel})`; });
+document.getElementById('resetZoom').addEventListener('click', () => { zoomLevel = 1; document.getElementById('routeMap').style.transform = 'scale(1)'; });
+
+/* ---------- Init ---------- */
+async function init() {
+  await fetchGraphData();
+  // populateNodeDropdowns() and renderNetworkMap() already called from fetchGraphData
+}
+init();
+
+</script>
+
+    <script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+
+</html>

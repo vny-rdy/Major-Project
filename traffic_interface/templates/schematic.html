@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Schematic Traffic Demo</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 8px; }
+    #controls { margin-bottom: 8px; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    label { font-size:14px; }
+    #canvas-wrap { width: 900px; max-width: 100%; margin: 0 auto; }
+    svg { width: 100%; height: 600px; border: 1px solid #ddd; background: #fafafa; }
+    .node { stroke: #222; stroke-width:1; cursor:pointer; }
+    .edge { stroke:#bbb; stroke-width:2; }
+    .route { fill:none; stroke-width:6; stroke-linecap:round; opacity:0.9; }
+    .legend { margin-left: 12px; font-size: 14px; }
+    .small { font-size: 12px; color:#444; }
+    .btn { padding:6px 10px; border-radius:6px; border:1px solid #ccc; background:#fff; cursor:pointer; }
+  </style>
+</head>
+<body>
+  <h3>Schematic Traffic — Small Area Visualization</h3>
+
+  <div id="controls" role="region" aria-label="Map controls">
+    <label for="start">Start node</label>
+    <select id="start" aria-label="Start node selector"></select>
+
+    <label for="end">End node</label>
+    <select id="end" aria-label="End node selector"></select>
+
+    <label for="k">Alternatives (k)</label>
+    <input id="k" type="number" min="1" max="5" value="3" style="width:60px" aria-label="Number of alternative routes"/>
+
+    <button id="getRoutes" class="btn">Get routes</button>
+    <button id="refresh" class="btn">Refresh predictions</button>
+
+    <div class="legend" aria-hidden="false">
+      <strong>Legend</strong>
+      <div class="small">● Green = low, ● Orange = medium, ● Red = high</div>
+    </div>
+  </div>
+
+  <div id="canvas-wrap" role="img" aria-label="Schematic traffic map">
+    <svg id="schematic" viewBox="0 0 1000 700" tabindex="0"></svg>
+  </div>
+
+<script>
+(async function(){
+  const svg = document.getElementById('schematic');
+  const startSel = document.getElementById('start');
+  const endSel = document.getElementById('end');
+  const getRoutesBtn = document.getElementById('getRoutes');
+  const refreshBtn = document.getElementById('refresh');
+  const kInput = document.getElementById('k');
+
+  // Add simulate control UI
+  const simWrapper = document.createElement('div');
+  simWrapper.style.marginLeft = '12px';
+  simWrapper.innerHTML = `Simulate: <input id="sim" type="range" min="0.5" max="1.5" step="0.1" value="1.0"> <span id="simVal">1.0</span>`;
+  document.getElementById('controls').appendChild(simWrapper);
+  const simSlider = document.getElementById('sim');
+  const simVal = document.getElementById('simVal');
+
+  let nodeData = [];
+  let subsetIDs = [];
+  let gridPositions = {};
+
+  // Utility: linear interpolate two hex colors
+  function lerpColor(a,b,t){
+    // a,b are hex like '#RRGGBB'
+    const ah = parseInt(a.slice(1),16), bh = parseInt(b.slice(1),16);
+    const ar = (ah>>16)&0xff, ag=(ah>>8)&0xff, ab=ah&0xff;
+    const br = (bh>>16)&0xff, bg=(bh>>8)&0xff, bb=bh&0xff;
+    const rr = Math.round(ar + (br-ar)*t), rg = Math.round(ag + (bg-ag)*t), rb = Math.round(ab + (bb-ab)*t);
+    return '#' + ((1<<24) + (rr<<16) + (rg<<8) + rb).toString(16).slice(1);
+  }
+
+  // Color scale: green -> yellow -> red
+  function colorScale(v, minV, maxV){
+    if(isNaN(v)) return '#999';
+    const t = Math.max(0, Math.min(1, (v - minV) / (maxV - minV + 1e-9)));
+    if(t < 0.5){
+      // green -> yellow
+      return lerpColor('#43a047', '#fdd835', t*2);
+    } else {
+      // yellow -> red
+      return lerpColor('#fdd835', '#e53935', (t-0.5)*2);
+    }
+  }
+
+  // draw grid lines and store positions (same as before)
+  function drawBaseGrid(cols=5, rows=5){
+    const w = 900, h = 600, margin = 60;
+    const gx = (w - margin*2) / (cols-1);
+    const gy = (h - margin*2) / (rows-1);
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        const idx = r*cols + c;
+        const x = margin + c*gx, y = margin + r*gy;
+        gridPositions[idx] = {x,y};
+        // draw faint grid edges
+        if(c < cols-1){
+          const nx = margin + (c+1)*gx;
+          const lineh = document.createElementNS('http://www.w3.org/2000/svg','line');
+          lineh.setAttribute('x1', x); lineh.setAttribute('y1', y);
+          lineh.setAttribute('x2', nx); lineh.setAttribute('y2', y);
+          lineh.setAttribute('class', 'edge');
+          lineh.setAttribute('stroke-opacity', '0.22');
+          svg.appendChild(lineh);
+        }
+        if(r < rows-1){
+          const ny = margin + (r+1)*gy;
+          const linev = document.createElementNS('http://www.w3.org/2000/svg','line');
+          linev.setAttribute('x1', x); linev.setAttribute('y1', y);
+          linev.setAttribute('x2', x); linev.setAttribute('y2', ny);
+          linev.setAttribute('class', 'edge');
+          linev.setAttribute('stroke-opacity', '0.22');
+          svg.appendChild(linev);
+        }
+      }
+    }
+  }
+
+  function clearNodes(){
+    (svg.querySelectorAll('.node, .nlabel, .node-ring')).forEach(e=>e.remove());
+  }
+
+  // draw nodes using continuous color scale and radius by congestion
+  function drawNodes(minV, maxV, topIDs=[]){
+    clearNodes();
+    for(let i=0;i<subsetIDs.length;i++){
+      const nid = subsetIDs[i];
+      const nd = nodeData.find(d => d.node_id === nid);
+      const pos = gridPositions[i];
+      if(!pos || !nd) continue;
+
+      const val = nd.congestion;
+      const color = colorScale(val, minV, maxV);
+      const radius = 8 + 12 * ( (val - minV) / (maxV - minV + 1e-9) ); // 8..20
+
+      // circle
+      const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      circle.setAttribute('cx', pos.x); circle.setAttribute('cy', pos.y);
+      circle.setAttribute('r', radius);
+      circle.setAttribute('class','node');
+      circle.setAttribute('fill', color);
+      circle.setAttribute('data-node', nid);
+      circle.style.transition = 'r 0.15s, fill 0.2s';
+
+      // ring for top congested nodes
+      if(topIDs.includes(nid)){
+        const ring = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        ring.setAttribute('cx', pos.x); ring.setAttribute('cy', pos.y);
+        ring.setAttribute('r', radius + 6);
+        ring.setAttribute('class','node-ring');
+        ring.setAttribute('fill','none');
+        ring.setAttribute('stroke','#000');
+        ring.setAttribute('stroke-width','2');
+        ring.setAttribute('opacity','0.15');
+        svg.appendChild(ring);
+      }
+
+      // label text
+      const lab = document.createElementNS('http://www.w3.org/2000/svg','text');
+      lab.setAttribute('x', pos.x + radius + 4);
+      lab.setAttribute('y', pos.y + 4);
+      lab.setAttribute('class','nlabel');
+      lab.setAttribute('font-size','12');
+      lab.textContent = `${nid} (${Math.round(val)})`;
+
+      svg.appendChild(circle);
+      svg.appendChild(lab);
+
+      // selector population
+      if(!Array.from(startSel.options).some(o=>o.value==nid)){
+        const optionS = document.createElement('option'); optionS.value = nid; optionS.text = nid; startSel.appendChild(optionS);
+        const optionE = document.createElement('option'); optionE.value = nid; optionE.text = nid; endSel.appendChild(optionE);
+      }
+
+      // interactions
+      circle.addEventListener('click', ()=> startSel.value = nid);
+      circle.addEventListener('contextmenu', (ev)=> { ev.preventDefault(); endSel.value = nid; });
+    }
+  }
+
+  // draw colorbar legend (min->max)
+  function drawLegend(minV, maxV){
+    // remove old legend bar
+    const old = document.getElementById('colorbar');
+    if(old) old.remove();
+    const g = document.createElement('div');
+    g.id = 'colorbar';
+    g.style.position = 'absolute';
+    g.style.right = '18px';
+    g.style.top = '26px';
+    g.style.width = '220px';
+    g.style.padding = '6px';
+    g.style.background = 'rgba(255,255,255,0.9)';
+    g.style.border = '1px solid #ddd';
+    g.style.borderRadius = '6px';
+    g.style.fontSize = '12px';
+    g.innerHTML = `<div style="font-weight:600">Congestion</div>
+      <div style="height:10px; margin:6px 0; background: linear-gradient(to right, #43a047, #fdd835, #e53935);"></div>
+      <div style="display:flex; justify-content:space-between;"><span>${Math.round(minV)}</span><span>${Math.round((minV+maxV)/2)}</span><span>${Math.round(maxV)}</span></div>`;
+    document.body.appendChild(g);
+  }
+
+  // fetch predictions from server; supports sim slider (server should accept ?sim=)
+  async function fetchPredictions(){
+    const sim = parseFloat(simSlider.value) || 1.0;
+    simVal.textContent = sim.toFixed(1);
+    const res = await fetch(`/api/congestion?sim=${sim}`);
+    const arr = await res.json();
+    nodeData = arr;
+    subsetIDs = nodeData.slice(0,25).map(x=>x.node_id);
+
+    // compute min/max (use 5th/95th percentiles for robust coloring)
+    const vals = subsetIDs.map(id => nodeData.find(d=>d.node_id===id).congestion);
+    const sorted = vals.slice().sort((a,b)=>a-b);
+    const minV = sorted[Math.floor(sorted.length*0.05)] ?? sorted[0];
+    const maxV = sorted[Math.ceil(sorted.length*0.95)] ?? sorted[sorted.length-1];
+
+    // find top 3 nodes to highlight
+    const topIDs = subsetIDs.slice().sort((a,b) => {
+      return nodeData.find(d=>d.node_id===b).congestion - nodeData.find(d=>d.node_id===a).congestion;
+    }).slice(0,3);
+
+    drawNodes(minV, maxV, topIDs);
+    drawLegend(minV, maxV);
+  }
+
+  // route drawing
+  async function drawRoutes(){
+    // clear previous route elements
+    (svg.querySelectorAll('.route')).forEach(e=>e.remove());
+    const s = parseInt(startSel.value);
+    const e = parseInt(endSel.value);
+    const k = parseInt(kInput.value) || 1;
+    if(isNaN(s) || isNaN(e)){ alert("Choose start and end"); return; }
+    const res = await fetch(`/api/routes?start=${s}&end=${e}&k=${k}`);
+    const data = await res.json();
+    if(data.error){ alert(data.error); return; }
+    const colors = ['#1565c0','#6a1b9a','#2e7d32','#ff8f00','#607d8b'];
+
+    data.paths.forEach((p, idx)=>{
+      const pts = p.nodes.map(nid => {
+        const si = subsetIDs.indexOf(nid);
+        if(si>=0) return gridPositions[si];
+        // try to map by order
+        return {x: 50 + Math.random()*800, y: 50 + Math.random()*500};
+      });
+      if(pts.length < 2) return;
+      const pathD = pts.map((pt,i)=> (i===0?`M ${pt.x} ${pt.y}`:`L ${pt.x} ${pt.y}`)).join(' ');
+      const pathEl = document.createElementNS('http://www.w3.org/2000/svg','path');
+      pathEl.setAttribute('d', pathD);
+      pathEl.setAttribute('class','route');
+      pathEl.setAttribute('stroke', colors[idx % colors.length]);
+      pathEl.setAttribute('stroke-width', 6 - Math.min(4, idx));
+      pathEl.setAttribute('fill','none');
+      svg.appendChild(pathEl);
+    });
+  }
+
+  drawBaseGrid(5,5);
+  await fetchPredictions();
+
+  getRoutesBtn.addEventListener('click', drawRoutes);
+  refreshBtn.addEventListener('click', async ()=> { startSel.innerHTML=''; endSel.innerHTML=''; await fetchPredictions(); (svg.querySelectorAll('.route')).forEach(e=>e.remove()); });
+
+  simSlider.addEventListener('input', async ()=> { await fetchPredictions(); });
+
+  document.addEventListener('keydown', (e)=> { if(e.key === 'Enter') drawRoutes(); });
+})();
+</script>
+
+</body>
+</html>

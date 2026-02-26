@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Analytics Dashboard - Comprehensive traffic pattern analysis and AI model performance monitoring">
+    <title>Analytics Dashboard | Traffic AI Dashboard</title>
+    <link rel="stylesheet" href="../css/main.css">
+  
+  <script type="module" async src="https://static.rocket.new/rocket-web.js?_cfg=https%3A%2F%2Ftrafficai2122back.builtwithrocket.new&_be=https%3A%2F%2Fapplication.rocket.new&_v=0.1.12"></script>
+  <script type="module" defer src="https://static.rocket.new/rocket-shot.js?v=0.0.2"></script>
+  </head>
+<body class="bg-background min-h-screen">
+    <!-- Header Navigation -->
+    <header class="bg-surface border-b border-border sticky top-0 z-navigation shadow-sm">
+        <nav class="max-w-[1920px] mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="Traffic AI Dashboard Logo">
+                        <rect width="40" height="40" rx="8" fill="#1E40AF"/>
+                        <path d="M20 8L28 14V26L20 32L12 26V14L20 8Z" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/>
+                        <circle cx="20" cy="20" r="4" fill="#F59E0B"/>
+                        <path d="M20 12V16M20 24V28M12 20H16M24 20H28" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <div>
+                        <h1 class="text-xl font-heading font-semibold text-text-primary">Traffic AI</h1>
+                        <p class="text-xs text-text-secondary">Urban Intelligence Platform</p>
+                    </div>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center gap-2">
+                    <a href="traffic_control_center.html" class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth">
+                        Control Center
+                    </a>
+                    <a href="route_optimization_hub.html" class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth">
+                        Route Optimization
+                    </a>
+                    <a href="analytics_dashboard.html" class="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium transition-smooth">
+                        Analytics
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-secondary-100 transition-smooth" aria-label="Toggle mobile menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-2 border-t border-border pt-4">
+                <div class="flex flex-col gap-2">
+                    <a href="traffic_control_center.html" class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth">
+                        Control Center
+                    </a>
+                    <a href="route_optimization_hub.html" class="px-4 py-2 rounded-lg text-text-primary hover:bg-secondary-100 transition-smooth">
+                        Route Optimization
+                    </a>
+                    <a href="analytics_dashboard.html" class="px-4 py-2 rounded-lg bg-primary text-primary-foreground font-medium">
+                        Analytics
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-[1920px] mx-auto px-4 md:px-6 py-6">
+        <!-- Page Header -->
+        <div class="mb-6">
+            <div class="flex items-center justify-between flex-wrap gap-4">
+                <div>
+                    <h2 class="text-3xl font-heading font-semibold text-text-primary mb-2">Analytics Dashboard</h2>
+                    <p class="text-text-secondary">Comprehensive traffic pattern analysis and AI model performance monitoring</p>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2 px-4 py-2 bg-secondary-50 border border-border rounded-lg">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                        <span class="text-sm text-text-secondary">Last Updated:</span>
+                        <span id="lastUpdateTime" class="text-sm font-medium text-text-primary tabular-nums">12:08:07</span>
+                    </div>
+                    <button id="refreshBtn" class="btn btn-outline" aria-label="Refresh data">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- KPI Strip -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+            <!-- Network Efficiency -->
+            <div class="card">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-12 h-12 rounded-lg bg-primary-100 flex items-center justify-center">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E40AF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                        </svg>
+                    </div>
+                    <div class="flex items-center gap-1 text-success-600">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                        <span class="text-sm font-medium">+2.4%</span>
+                    </div>
+                </div>
+                <p class="text-sm text-text-secondary mb-1">Network Efficiency</p>
+                <p class="text-3xl font-heading font-semibold text-text-primary tabular-nums" id="networkEfficiency">87.5%</p>
+            </div>
+
+            <!-- Prediction Accuracy -->
+            <div class="card">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-12 h-12 rounded-lg bg-success-100 flex items-center justify-center">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <div class="flex items-center gap-1 text-success-600">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                        <span class="text-sm font-medium">+1.2%</span>
+                    </div>
+                </div>
+                <p class="text-sm text-text-secondary mb-1">Prediction Accuracy</p>
+                <p class="text-3xl font-heading font-semibold text-text-primary tabular-nums" id="predictionAccuracy">94.8%</p>
+            </div>
+
+            <!-- Average Response Time -->
+            <div class="card">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-12 h-12 rounded-lg bg-warning-100 flex items-center justify-center">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <polyline points="12 6 12 12 16 14"></polyline>
+                        </svg>
+                    </div>
+                    <div class="flex items-center gap-1 text-success-600">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                        <span class="text-sm font-medium">-8ms</span>
+                    </div>
+                </div>
+                <p class="text-sm text-text-secondary mb-1">Avg Response Time</p>
+                <p class="text-3xl font-heading font-semibold text-text-primary tabular-nums" id="avgResponseTime">142ms</p>
+            </div>
+
+            <!-- Data Quality Index -->
+            <div class="card">
+                <div class="flex items-center justify-between mb-3">
+                    <div class="w-12 h-12 rounded-lg bg-accent-100 flex items-center justify-center">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                        </svg>
+                    </div>
+                    <div class="flex items-center gap-1 text-success-600">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                        <span class="text-sm font-medium">+0.3%</span>
+                    </div>
+                </div>
+                <p class="text-sm text-text-secondary mb-1">Data Quality Index</p>
+                <p class="text-3xl font-heading font-semibold text-text-primary tabular-nums" id="dataQuality">98.5%</p>
+            </div>
+        </div>
+
+        <!-- Time Range & Filter Controls -->
+        <div class="card mb-6">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <!-- Time Range Picker -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <label class="text-sm font-medium text-text-primary">Time Range:</label>
+                    <div class="flex gap-2">
+                        <button class="time-range-btn active px-4 py-2 rounded-lg border-2 border-primary bg-primary-50 text-primary font-medium text-sm transition-smooth" data-range="hourly">
+                            Hourly
+                        </button>
+                        <button class="time-range-btn px-4 py-2 rounded-lg border-2 border-border bg-surface text-text-primary font-medium text-sm hover:border-border-hover transition-smooth" data-range="daily">
+                            Daily
+                        </button>
+                        <button class="time-range-btn px-4 py-2 rounded-lg border-2 border-border bg-surface text-text-primary font-medium text-sm hover:border-border-hover transition-smooth" data-range="weekly">
+                            Weekly
+                        </button>
+                    </div>
+                    <button id="customDateBtn" class="px-4 py-2 rounded-lg border border-border bg-surface text-text-primary text-sm hover:bg-secondary-50 transition-smooth">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="inline mr-2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                        Custom Date
+                    </button>
+                </div>
+
+                <!-- Advanced Filters -->
+                <div class="flex flex-wrap items-center gap-3">
+                    <div>
+  <label
+    for="nodeGroupFilter"
+    class="block text-sm font-medium text-text-primary mb-2"
+  >
+    Node Group
+  </label>
+
+  <select
+    id="nodeGroupFilter"
+    class="input h-10 px-3 text-sm"
+  >
+    <option value="all">All Nodes</option>
+    <option value="intersection">Intersections</option>
+    <option value="highway">Highways</option>
+    <option value="residential">Residential</option>
+  </select>
+</div>
+
+<div>
+  <label
+    for="severityFilter"
+    class="block text-sm font-medium text-text-primary mb-2"
+  >
+    Severity Filter
+  </label>
+
+  <select
+    id="severityFilter"
+    class="input h-10 px-3 text-sm"
+  >
+    <option value="all">All Severity</option>
+    <option value="low">Low (0–30)</option>
+    <option value="medium">Medium (31–60)</option>
+    <option value="high">High (61–100)</option>
+  </select>
+</div>
+
+                    <button id="exportDataBtn" class="btn btn-outline h-10 px-4 text-sm">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Export
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Analytics Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-24 gap-6">
+            <!-- Historical Congestion Trends (12 cols) -->
+            <div class="lg:col-span-12">
+                <div class="card p-0 overflow-hidden">
+                    <!-- Chart Header -->
+                    <div class="px-6 py-4 border-b border-border bg-secondary-50">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-heading font-semibold text-text-primary">Historical Congestion Trends</h3>
+                            <button id="expandTrendsBtn" class="p-2 rounded-lg hover:bg-secondary-100 transition-smooth" aria-label="Expand chart">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="15 3 21 3 21 9"></polyline>
+                                    <polyline points="9 21 3 21 3 15"></polyline>
+                                    <line x1="21" y1="3" x2="14" y2="10"></line>
+                                    <line x1="3" y1="21" x2="10" y2="14"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Chart Container -->
+                    <div class="p-6">
+                        <div class="relative bg-secondary-50 rounded-lg p-4" style="height: 400px;">
+                            <svg id="congestionChart" width="100%" height="100%" viewBox="0 0 800 350">
+                                <defs>
+                                    <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                        <stop offset="0%" style="stop-color:#1E40AF;stop-opacity:0.2" />
+                                        <stop offset="100%" style="stop-color:#1E40AF;stop-opacity:0" />
+                                    </linearGradient>
+                                </defs>
+                                <!-- Grid Lines -->
+                                <g id="gridLines"></g>
+                                <!-- Chart Area -->
+                                <g id="chartArea"></g>
+                                <!-- Axes -->
+                                <g id="axes"></g>
+                            </svg>
+                        </div>
+
+                        <!-- Node-Level Sparklines -->
+                        <div class="mt-6">
+                            <h4 class="text-sm font-semibold text-text-primary mb-3">Top Monitored Nodes</h4>
+                            <div id="sparklineContainer" class="space-y-3">
+                                <!-- Dynamically populated -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Model Performance & API Status (12 cols split) -->
+            <div class="lg:col-span-12 space-y-6">
+                <!-- Model Performance Visualization (8 cols equivalent) -->
+                <div class="card p-0 overflow-hidden">
+                    <div class="px-6 py-4 border-b border-border bg-secondary-50">
+                        <h3 class="text-lg font-heading font-semibold text-text-primary">Model Performance</h3>
+                    </div>
+                    <div class="p-6">
+                        <!-- Performance Metrics -->
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="p-4 rounded-lg bg-success-50 border border-success-600">
+                                <p class="text-xs text-success-700 mb-1">Mean Absolute Error</p>
+                                <p class="text-2xl font-heading font-semibold text-success-700 tabular-nums" id="maeValue">3.24</p>
+                                <div class="flex items-center gap-1 mt-1 text-success-600">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                    <span class="text-xs font-medium">-0.12</span>
+                                </div>
+                            </div>
+                            <div class="p-4 rounded-lg bg-primary-50 border border-primary-600">
+                                <p class="text-xs text-primary-700 mb-1">Root Mean Square Error</p>
+                                <p class="text-2xl font-heading font-semibold text-primary-700 tabular-nums" id="rmseValue">4.87</p>
+                                <div class="flex items-center gap-1 mt-1 text-primary-600">
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                    <span class="text-xs font-medium">-0.08</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Performance Chart -->
+                        <div class="relative bg-secondary-50 rounded-lg p-4" style="height: 250px;">
+                            <svg id="performanceChart" width="100%" height="100%" viewBox="0 0 600 200">
+                                <g id="perfGridLines"></g>
+                                <g id="perfChartArea"></g>
+                                <g id="perfAxes"></g>
+                            </svg>
+                        </div>
+
+                        <!-- Confidence Intervals -->
+                        <div class="mt-4 p-3 rounded-lg bg-secondary-50 border border-border">
+                            <div class="flex items-center justify-between text-sm">
+                                <span class="text-text-secondary">95% Confidence Interval:</span>
+                                <span class="font-mono font-medium text-text-primary">±2.1 units</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- API Status Monitoring (4 cols equivalent) -->
+                <div class="card">
+                    <h3 class="text-lg font-heading font-semibold text-text-primary mb-4">API Status</h3>
+                    
+                    <!-- Connection Health -->
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between p-3 rounded-lg bg-success-50 border border-success-600">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-success-700">Congestion API</p>
+                                    <p class="text-xs text-success-600">Connected</p>
+                                </div>
+                            </div>
+                            <div class="w-2 h-2 bg-success-500 rounded-full animate-pulse"></div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-3 rounded-lg bg-success-50 border border-success-600">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-lg bg-success-100 flex items-center justify-center">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-semibold text-success-700">Route API</p>
+                                    <p class="text-xs text-success-600">Connected</p>
+                                </div>
+                            </div>
+                            <div class="w-2 h-2 bg-success-500 rounded-full animate-pulse"></div>
+                        </div>
+
+                        <!-- API Metrics -->
+                        <div class="pt-4 border-t border-border space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Uptime</span>
+                                <span class="text-sm font-mono font-medium text-text-primary">99.97%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Requests/min</span>
+                                <span class="text-sm font-mono font-medium text-text-primary">1,247</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Error Rate</span>
+                                <span class="text-sm font-mono font-medium text-success-600">0.03%</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-text-secondary">Cache Hit Rate</span>
+                                <span class="text-sm font-mono font-medium text-text-primary">87.2%</span>
+                            </div>
+                        </div>
+
+                        <!-- Offline Mode Indicator -->
+                        <div class="pt-4 border-t border-border">
+                            <div class="flex items-center gap-2 text-sm">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                                </svg>
+                                <span class="text-text-secondary">Cached Data Available</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Node Performance Table -->
+        <div class="card mt-6 p-0 overflow-hidden">
+            <div class="px-6 py-4 border-b border-border bg-secondary-50">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-heading font-semibold text-text-primary">Detailed Node Performance</h3>
+                    <button id="toggleTableBtn" class="text-sm text-primary hover:text-primary-700 font-medium">
+                        Show All Nodes
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Node ID</th>
+                            <th>Type</th>
+                            <th>Avg Congestion</th>
+                            <th>Predicted</th>
+                            <th>Actual</th>
+                            <th>Error</th>
+                            <th>Correlation</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="nodePerformanceTable">
+                        <!-- Dynamically populated -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom Date Modal -->
+    <div id="customDateModal" class="modal-backdrop hidden">
+        <div class="modal">
+            <div class="p-6 border-b border-border">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-heading font-semibold text-text-primary">Select Custom Date Range</h3>
+                    <button id="closeCustomDate" class="p-2 rounded-lg hover:bg-secondary-100 transition-smooth" aria-label="Close modal">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+  <label
+    for="startDate"
+    class="block text-sm font-medium text-text-primary mb-2"
+  >
+    Start Date
+  </label>
+
+  <input
+    type="date"
+    id="startDate"
+    class="input w-full"
+    value="2025-12-19"
+  />
+</div>
+
+<div>
+  <label
+    for="endDate"
+    class="block text-sm font-medium text-text-primary mb-2"
+  >
+    End Date
+  </label>
+
+  <input
+    type="date"
+    id="endDate"
+    class="input w-full"
+    value="2025-12-26"
+  />
+</div>
+
+                </div>
+            </div>
+            <div class="p-6 border-t border-border flex justify-end gap-3">
+                <button id="cancelCustomDate" class="btn btn-outline">Cancel</button>
+                <button id="applyCustomDate" class="btn btn-primary">Apply Range</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Options Modal -->
+    <div id="exportModal" class="modal-backdrop hidden">
+        <div class="modal">
+            <div class="p-6 border-b border-border">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-heading font-semibold text-text-primary">Export Data</h3>
+                    <button id="closeExport" class="p-2 rounded-lg hover:bg-secondary-100 transition-smooth" aria-label="Close modal">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6 space-y-3">
+                <button id="exportCSVBtn" class="btn btn-outline w-full justify-start">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="12" y1="18" x2="12" y2="12"></line>
+                        <line x1="9" y1="15" x2="15" y2="15"></line>
+                    </svg>
+                    Export as CSV
+                </button>
+                <button id="exportPNGBtn" class="btn btn-outline w-full justify-start">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="mr-3">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    Export as PNG Screenshot
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="fixed inset-0 bg-surface/80 backdrop-blur-sm flex items-center justify-center z-modal hidden">
+        <div class="text-center">
+            <div class="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+            <p class="text-text-primary font-medium">Loading analytics data...</p>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "http://127.0.0.1:5000";
+
+let congestionData = [];
+let nodeData = [];
+
+async function fetchGraphData() {
+    try {
+        const res = await fetch(`${API_BASE}/api/graph`);
+        const data = await res.json();
+
+        // Convert backend nodes → frontend format
+        nodeData = data.nodes.map((n) => ({
+            id: `N${String(n.id).padStart(3, "0")}`,
+            type: "Intersection",
+            avgCongestion: n.congestion.toFixed(1),
+            predicted: n.congestion.toFixed(1),
+            actual: n.congestion.toFixed(1),
+            error: "0.00",
+            correlation: "1.000"
+        }));
+
+        // Time-series (fake time, real congestion)
+        congestionData = nodeData.slice(0, 24).map((n, i) => ({
+            time: i,
+            value: parseFloat(n.avgCongestion)
+        }));
+
+    } catch (err) {
+        console.error("Backend not reachable", err);
+    }
+}
+
+        
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Time Range Selection
+        const timeRangeBtns = document.querySelectorAll('.time-range-btn');
+        let currentRange = 'hourly';
+
+        timeRangeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                timeRangeBtns.forEach(b => {
+                    b.classList.remove('active', 'border-primary', 'bg-primary-50', 'text-primary');
+                    b.classList.add('border-border', 'bg-surface', 'text-text-primary');
+                });
+                btn.classList.add('active', 'border-primary', 'bg-primary-50', 'text-primary');
+                btn.classList.remove('border-border', 'bg-surface');
+                
+                currentRange = btn.dataset.range;
+                updateCharts();
+            });
+        });
+
+        // Custom Date Modal
+        const customDateBtn = document.getElementById('customDateBtn');
+        const customDateModal = document.getElementById('customDateModal');
+        const closeCustomDate = document.getElementById('closeCustomDate');
+        const cancelCustomDate = document.getElementById('cancelCustomDate');
+        const applyCustomDate = document.getElementById('applyCustomDate');
+
+        customDateBtn.addEventListener('click', () => {
+            customDateModal.classList.remove('hidden');
+        });
+
+        [closeCustomDate, cancelCustomDate].forEach(btn => {
+            btn.addEventListener('click', () => {
+                customDateModal.classList.add('hidden');
+            });
+        });
+
+        applyCustomDate.addEventListener('click', () => {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+            console.log('Custom date range:', startDate, 'to', endDate);
+            customDateModal.classList.add('hidden');
+            updateCharts();
+        });
+
+        // Export Modal
+        const exportDataBtn = document.getElementById('exportDataBtn');
+        const exportModal = document.getElementById('exportModal');
+        const closeExport = document.getElementById('closeExport');
+        const exportCSVBtn = document.getElementById('exportCSVBtn');
+        const exportPNGBtn = document.getElementById('exportPNGBtn');
+
+        exportDataBtn.addEventListener('click', () => {
+            exportModal.classList.remove('hidden');
+        });
+
+        closeExport.addEventListener('click', () => {
+            exportModal.classList.add('hidden');
+        });
+
+        exportCSVBtn.addEventListener('click', () => {
+            exportCSV();
+            exportModal.classList.add('hidden');
+        });
+
+        exportPNGBtn.addEventListener('click', () => {
+            alert('PNG screenshot export would use html2canvas library in production');
+            exportModal.classList.add('hidden');
+        });
+
+        // Mock Data Generation
+        // const generateTimeSeriesData = (points = 24) => {
+        //     const data = [];
+        //     let value = 40 + Math.random() * 20;
+        //     for (let i = 0; i < points; i++) {
+        //         value += (Math.random() - 0.5) * 10;
+        //         value = Math.max(10, Math.min(90, value));
+        //         data.push({
+        //             time: i,
+        //             value: value,
+        //             predicted: value + (Math.random() - 0.5) * 5
+        //         });
+        //     }
+        //     return data;
+        // };
+
+        // const generateNodeData = (count = 10) => {
+        //     const types = ['Intersection', 'Highway', 'Residential'];
+        //     return Array.from({ length: count }, (_, i) => {
+        //         const actual = 30 + Math.random() * 50;
+        //         const predicted = actual + (Math.random() - 0.5) * 8;
+        //         return {
+        //             id: `N${String(i + 1).padStart(3, '0')}`,
+        //             type: types[Math.floor(Math.random() * types.length)],
+        //             avgCongestion: actual.toFixed(1),
+        //             predicted: predicted.toFixed(1),
+        //             actual: actual.toFixed(1),
+        //             error: Math.abs(predicted - actual).toFixed(2),
+        //             correlation: (0.85 + Math.random() * 0.14).toFixed(3)
+        //         };
+        //     });
+        // };
+
+        // let congestionData = generateTimeSeriesData(24);
+        // let nodeData = generateNodeData(10);
+
+
+        // Render Congestion Chart
+        
+        const renderCongestionChart = () => {
+            if (!congestionData || congestionData.length < 2) {
+    return;
+}
+            const svg = document.getElementById('congestionChart');
+            const gridLines = document.getElementById('gridLines');
+            const chartArea = document.getElementById('chartArea');
+            const axes = document.getElementById('axes');
+
+            // Clear existing
+            gridLines.innerHTML = '';
+            chartArea.innerHTML = '';
+            axes.innerHTML = '';
+
+            const width = 800;
+            const height = 350;
+            const padding = { top: 20, right: 40, bottom: 40, left: 60 };
+            const chartWidth = width - padding.left - padding.right;
+            const chartHeight = height - padding.top - padding.bottom;
+
+            // Grid lines
+            for (let i = 0; i <= 5; i++) {
+                const y = padding.top + (chartHeight / 5) * i;
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', padding.left);
+                line.setAttribute('y1', y);
+                line.setAttribute('x2', width - padding.right);
+                line.setAttribute('y2', y);
+                line.setAttribute('stroke', '#E2E8F0');
+                line.setAttribute('stroke-width', '1');
+                gridLines.appendChild(line);
+
+                // Y-axis labels
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', padding.left - 10);
+                text.setAttribute('y', y + 5);
+                text.setAttribute('text-anchor', 'end');
+                text.setAttribute('fill', '#6B7280');
+                text.setAttribute('font-size', '12');
+                text.textContent = (100 - (i * 20)).toString();
+                axes.appendChild(text);
+            }
+
+            // Plot data
+            const xScale = chartWidth / (congestionData.length - 1);
+            const yScale = chartHeight / 100;
+
+            // Area path
+            let areaPath = `M ${padding.left} ${height - padding.bottom}`;
+            congestionData.forEach((point, i) => {
+                const x = padding.left + i * xScale;
+                const y = padding.top + (100 - point.value) * yScale;
+                areaPath += ` L ${x} ${y}`;
+            });
+            areaPath += ` L ${padding.left + (congestionData.length - 1) * xScale} ${height - padding.bottom} Z`;
+
+            const area = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            area.setAttribute('d', areaPath);
+            area.setAttribute('fill', 'url(#areaGradient)');
+            chartArea.appendChild(area);
+
+            // Line path
+            let linePath = '';
+            congestionData.forEach((point, i) => {
+                const x = padding.left + i * xScale;
+                const y = padding.top + (100 - point.value) * yScale;
+                linePath += `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+            });
+
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            line.setAttribute('d', linePath);
+            line.setAttribute('stroke', '#1E40AF');
+            line.setAttribute('stroke-width', '3');
+            line.setAttribute('fill', 'none');
+            chartArea.appendChild(line);
+
+            // Data points
+            congestionData.forEach((point, i) => {
+                const x = padding.left + i * xScale;
+                const y = padding.top + (100 - point.value) * yScale;
+
+                const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circle.setAttribute('cx', x);
+                circle.setAttribute('cy', y);
+                circle.setAttribute('r', '4');
+                circle.setAttribute('fill', '#1E40AF');
+                circle.setAttribute('stroke', '#FFFFFF');
+                circle.setAttribute('stroke-width', '2');
+                chartArea.appendChild(circle);
+            });
+
+            // X-axis labels
+            const labelInterval = Math.floor(congestionData.length / 6);
+            congestionData.forEach((point, i) => {
+                if (i % labelInterval === 0 || i === congestionData.length - 1) {
+                    const x = padding.left + i * xScale;
+                    const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                    text.setAttribute('x', x);
+                    text.setAttribute('y', height - padding.bottom + 20);
+                    text.setAttribute('text-anchor', 'middle');
+                    text.setAttribute('fill', '#6B7280');
+                    text.setAttribute('font-size', '12');
+                    text.textContent = `${i}:00`;
+                    axes.appendChild(text);
+                }
+            });
+        };
+
+        // Render Performance Chart
+        const renderPerformanceChart = () => {
+            const svg = document.getElementById('performanceChart');
+            const gridLines = document.getElementById('perfGridLines');
+            const chartArea = document.getElementById('perfChartArea');
+            const axes = document.getElementById('perfAxes');
+
+            gridLines.innerHTML = '';
+            chartArea.innerHTML = '';
+            axes.innerHTML = '';
+
+            const width = 600;
+            const height = 200;
+            const padding = { top: 20, right: 30, bottom: 30, left: 50 };
+            const chartWidth = width - padding.left - padding.right;
+            const chartHeight = height - padding.top - padding.bottom;
+
+            // Grid lines
+            for (let i = 0; i <= 4; i++) {
+                const y = padding.top + (chartHeight / 4) * i;
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                line.setAttribute('x1', padding.left);
+                line.setAttribute('y1', y);
+                line.setAttribute('x2', width - padding.right);
+                line.setAttribute('y2', y);
+                line.setAttribute('stroke', '#E2E8F0');
+                line.setAttribute('stroke-width', '1');
+                gridLines.appendChild(line);
+            }
+
+            // MAE line
+            const maeData = Array.from({ length: 12 }, (_, i) => ({
+                x: i,
+                y: 3.5 - (i * 0.02) + (Math.random() - 0.5) * 0.3
+            }));
+
+            const xScale = chartWidth / (maeData.length - 1);
+            const yScale = chartHeight / 6;
+
+            let maePath = '';
+            maeData.forEach((point, i) => {
+                const x = padding.left + point.x * xScale;
+                const y = padding.top + (6 - point.y) * yScale;
+                maePath += `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+            });
+
+            const maeLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            maeLine.setAttribute('d', maePath);
+            maeLine.setAttribute('stroke', '#059669');
+            maeLine.setAttribute('stroke-width', '2');
+            maeLine.setAttribute('fill', 'none');
+            chartArea.appendChild(maeLine);
+
+            // RMSE line
+            const rmseData = Array.from({ length: 12 }, (_, i) => ({
+                x: i,
+                y: 5.2 - (i * 0.03) + (Math.random() - 0.5) * 0.4
+            }));
+
+            let rmsePath = '';
+            rmseData.forEach((point, i) => {
+                const x = padding.left + point.x * xScale;
+                const y = padding.top + (6 - point.y) * yScale;
+                rmsePath += `${i === 0 ? 'M' : 'L'} ${x} ${y}`;
+            });
+
+            const rmseLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            rmseLine.setAttribute('d', rmsePath);
+            rmseLine.setAttribute('stroke', '#1E40AF');
+            rmseLine.setAttribute('stroke-width', '2');
+            rmseLine.setAttribute('fill', 'none');
+            chartArea.appendChild(rmseLine);
+
+            // Legend
+            const legend = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            
+            const maeLegend = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            maeLegend.setAttribute('x1', width - 100);
+            maeLegend.setAttribute('y1', 15);
+            maeLegend.setAttribute('x2', width - 80);
+            maeLegend.setAttribute('y2', 15);
+            maeLegend.setAttribute('stroke', '#059669');
+            maeLegend.setAttribute('stroke-width', '2');
+            legend.appendChild(maeLegend);
+
+            const maeText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            maeText.setAttribute('x', width - 75);
+            maeText.setAttribute('y', 19);
+            maeText.setAttribute('fill', '#6B7280');
+            maeText.setAttribute('font-size', '11');
+            maeText.textContent = 'MAE';
+            legend.appendChild(maeText);
+
+            const rmseLegend = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            rmseLegend.setAttribute('x1', width - 100);
+            rmseLegend.setAttribute('y1', 30);
+            rmseLegend.setAttribute('x2', width - 80);
+            rmseLegend.setAttribute('y2', 30);
+            rmseLegend.setAttribute('stroke', '#1E40AF');
+            rmseLegend.setAttribute('stroke-width', '2');
+            legend.appendChild(rmseLegend);
+
+            const rmseText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+            rmseText.setAttribute('x', width - 75);
+            rmseText.setAttribute('y', 34);
+            rmseText.setAttribute('fill', '#6B7280');
+            rmseText.setAttribute('font-size', '11');
+            rmseText.textContent = 'RMSE';
+            legend.appendChild(rmseText);
+
+            chartArea.appendChild(legend);
+        };
+
+        // Render Sparklines
+        const renderSparklines = () => {
+            const container = document.getElementById('sparklineContainer');
+            container.innerHTML = '';
+
+            const topNodes = nodeData.slice(0, 5);
+            topNodes.forEach(node => {
+                const sparklineData = Array.from({ length: 12 }, () => parseFloat(node.avgCongestion));
+                
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-3 rounded-lg bg-secondary-50 border border-border hover:border-border-hover transition-smooth';
+                
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-xs font-semibold text-primary">
+                            ${node.id.slice(1)}
+                        </div>
+                        <div>
+                            <p class="text-sm font-semibold text-text-primary">${node.id}</p>
+                            <p class="text-xs text-text-secondary">${node.type}</p>
+                        </div>
+                    </div>
+                    <svg width="100" height="30" viewBox="0 0 100 30">
+                        ${sparklineData.map((val, i) => {
+                            const x = (i / (sparklineData.length - 1)) * 100;
+                            const y = 30 - (val / 100) * 30;
+                            return i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`;
+                        }).join(' ')}
+                    </svg>
+                    <div class="text-right">
+                        <p class="text-sm font-mono font-semibold text-text-primary">${node.avgCongestion}</p>
+                        <p class="text-xs text-text-secondary">avg</p>
+                    </div>
+                `;
+                
+                const path = div.querySelector('svg').innerHTML;
+                div.querySelector('svg').innerHTML = `<path d="${path}" stroke="#1E40AF" stroke-width="2" fill="none"/>`;
+                
+                container.appendChild(div);
+            });
+        };
+
+        // Render Node Performance Table
+        const renderNodeTable = () => {
+            const tbody = document.getElementById('nodePerformanceTable');
+            tbody.innerHTML = '';
+
+            nodeData.forEach(node => {
+                const row = document.createElement('tr');
+                const errorClass = parseFloat(node.error) < 3 ? 'text-success-600' : parseFloat(node.error) < 5 ? 'text-warning-600' : 'text-error-600';
+                
+                row.innerHTML = `
+                    <td class="font-mono font-semibold">${node.id}</td>
+                    <td>${node.type}</td>
+                    <td class="font-mono">${node.avgCongestion}</td>
+                    <td class="font-mono">${node.predicted}</td>
+                    <td class="font-mono">${node.actual}</td>
+                    <td class="font-mono ${errorClass}">${node.error}</td>
+                    <td class="font-mono">${node.correlation}</td>
+                    <td>
+                        <button class="text-sm text-primary hover:text-primary-700 font-medium">View Details</button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        };
+
+        // Update Charts
+        const updateCharts = async () => {
+    const loading = document.getElementById('loadingOverlay');
+    loading.classList.remove('hidden');
+    await fetchGraphData();   
+    renderCongestionChart();
+    renderPerformanceChart();
+    renderSparklines();
+    renderNodeTable();
+    updateLastUpdateTime();
+
+    loading.classList.add('hidden');
+};
+
+        // Export CSV
+        const exportCSV = () => {
+            const csv = [
+                ['Node ID', 'Type', 'Avg Congestion', 'Predicted', 'Actual', 'Error', 'Correlation'],
+                ...nodeData.map(node => [
+                    node.id,
+                    node.type,
+                    node.avgCongestion,
+                    node.predicted,
+                    node.actual,
+                    node.error,
+                    node.correlation
+                ])
+            ].map(row => row.join(',')).join('\n');
+
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `analytics_data_${new Date().toISOString().slice(0, 10)}.csv`;
+            a.click();
+        };
+
+        // Update Last Update Time
+        const updateLastUpdateTime = () => {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            document.getElementById('lastUpdateTime').textContent = timeString;
+        };
+
+        // Refresh Button
+        document.getElementById('refreshBtn').addEventListener('click', updateCharts);
+
+        // Initialize
+        updateCharts();
+
+
+        // Update time every second
+        setInterval(updateLastUpdateTime, 1000);
+
+        // Auto-refresh every 5 minutes
+        setInterval(updateCharts, 300000);
+    </script>
+<script id="dhws-dataInjector" src="../public/dhws-data-injector.js"></script>
+</body>
+</html>
